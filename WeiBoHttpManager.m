@@ -13,7 +13,6 @@
 #define SINA_APP_SECRET             @"7894dfdd1fc2ce7cc6e9e9ca620082fb"
 
 @implementation WeiBoHttpManager
-
 -(NSURL*)getOauthCodeUrl //留给webview用
 {
     //https://api.weibo.com/oauth2/authorize
