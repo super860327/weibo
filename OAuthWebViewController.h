@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OAuthWebViewController : UIViewController
+@interface OAuthWebViewController : UIViewController <UIWebViewDelegate>
 {
 }
 @property (retain, nonatomic) IBOutlet UIWebView *webV;

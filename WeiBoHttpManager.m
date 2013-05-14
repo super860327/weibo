@@ -7,12 +7,14 @@
 //
 
 #import "WeiBoHttpManager.h"
-
-#define SINA_API_AUTHORIZE          @"https://api.weibo.com/oauth2/.h"
-#define SINA_APP_KEY                @"3601604349"
-#define SINA_APP_SECRET             @"7894dfdd1fc2ce7cc6e9e9ca620082fb"
+#import "Constants.h"
+#import "ASIHTTPRequest.h"
 
 @implementation WeiBoHttpManager
+
+@synthesize authToken;
+@synthesize requestQueue;
+
 -(NSURL*)getOauthCodeUrl //留给webview用
 {
     //https://api.weibo.com/oauth2/authorize
@@ -25,7 +27,6 @@
                                    nil];
 	
 	NSURL *url = [self generateURL:SINA_API_AUTHORIZE params:params];
-	NSLog(@"url= %@",url);
     return url;
 }
 
@@ -51,6 +52,28 @@
 	} else {
 		return [NSURL URLWithString:baseURL];
 	}
+}
+-(void)getUserID
+{
+    //https://api.weibo.com/2/account/get_uid.json
+    self.authToken = [[NSUserDefaults standardUserDefaults] objectForKey:USER_STORE_ACCESS_TOKEN];
+    NSMutableDictionary     *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       authToken,   @"access_token",
+                                       nil];
+    NSString                *baseUrl = [NSString  stringWithFormat:@"%@/account/get_uid.json",SINA_V2_DOMAIN];
+    NSURL                   *url = [self generateURL:baseUrl params:params];
+    
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:SinaGetUserID];
+    [requestQueue addOperation:request];
+    [request release];
+}
+- (void)setGetUserInfo:(ASIHTTPRequest *)request withRequestType:(RequestType)requestType {
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:[NSNumber numberWithInt:requestType] forKey:USER_INFO_KEY_TYPE];
+    [request setUserInfo:dict];
+    [dict release];
 }
 
 @end

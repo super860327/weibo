@@ -9,6 +9,7 @@
 #import "TimelineViewController.h"
 #import "Constants.h"
 #import "OAuthWebViewController.h"
+#import "WeiBoHttpManager.h"
 
 #define indentify @"Cell"
 
@@ -17,6 +18,7 @@
 @end
 
 @implementation TimelineViewController
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -48,11 +50,14 @@
         [self.navigationController pushViewController:webController animated:YES];
         [webController release];
     }
-    else
-    {
-        
-    }
+
+
     
+}
+-(void)getUserID
+{
+    WeiBoHttpManager *httpManager=[[WeiBoHttpManager alloc]init];
+    [httpManager getUserID];
 }
 
 -(BOOL)isNeedToRefreshTheToken
