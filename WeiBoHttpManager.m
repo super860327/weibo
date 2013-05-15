@@ -15,6 +15,34 @@
 @synthesize authToken;
 @synthesize requestQueue;
 
+-(id)init
+{
+    self=[super init];
+    if(self)
+    {
+        requestQueue = [[ASINetworkQueue alloc]init];
+        [requestQueue setRequestDidFinishSelector:@selector(requestDidFinish)];
+        [requestQueue setRequestDidFailSelector:@selector(requestDidFail)];
+    }
+    return self;
+}
+-(void)dealloc
+{
+    [requestQueue release];
+    [super dealloc];
+}
+-(void)requestDidFinish:(ASIHTTPRequest*)request
+{
+//    request.requestID
+}
+
+-(void)requestDidFail:(ASIHTTPRequest*)request
+{
+    NSInteger errorCode= [[request error] code];
+    NSLog(@"Error Code: %i, Error Message: %@", errorCode, request.error);
+}
+
+
 -(NSURL*)getOauthCodeUrl //留给webview用
 {
     //https://api.weibo.com/oauth2/authorize

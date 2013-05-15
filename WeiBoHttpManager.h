@@ -12,6 +12,7 @@
 @interface WeiBoHttpManager : NSObject
 
 -(NSURL*)getOauthCodeUrl;
+-(void)getUserID;
 @property (nonatomic,copy)NSString *authToken;
 @property (nonatomic,retain) ASINetworkQueue *requestQueue;
 
