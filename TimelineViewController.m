@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
     data=[[NSMutableArray alloc]init];
-    
+    httpManager=[[WeiBoHttpManager alloc]init];
     for (int i=0; i<20; i++)
     {
         [data addObject:[NSString stringWithFormat:@"%d",i]];
@@ -51,12 +51,10 @@
         [webController release];
     }
     [self getUserID];
-
-
 }
+
 -(void)getUserID
 {
-    WeiBoHttpManager *httpManager=[[WeiBoHttpManager alloc]init];
     [httpManager getUserID];
 }
 

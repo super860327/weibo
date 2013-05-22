@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeiBoHttpManager.h"
 
 @interface TimelineViewController : UITableViewController
 {
     NSMutableArray *data;
+    WeiBoHttpManager *httpManager;
 }
 @end

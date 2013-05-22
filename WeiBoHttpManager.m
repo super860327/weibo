@@ -9,6 +9,7 @@
 #import "WeiBoHttpManager.h"
 #import "Constants.h"
 #import "ASIHTTPRequest.h"
+#import "SBJsonParser.h"
 
 @implementation WeiBoHttpManager
 
@@ -31,9 +32,60 @@
     [requestQueue release];
     [super dealloc];
 }
+
 -(void)requestDidFinish:(ASIHTTPRequest*)request
 {
-//    request.requestID
+    //    request.requestID
+    NSLog(@"%@", request.responseString);
+    NSDictionary *userInformation =[request userInfo];
+    RequestType requestType =[[userInformation objectForKey:USER_INFO_KEY_TYPE]intValue];
+    NSString *responseString=[request responseString];
+    
+    SBJsonParser *parser=[[SBJsonParser alloc]init];
+    id returnObject =[parser objectWithString:responseString];
+    [parser release];
+    
+    if([returnObject isKindOfClass:[NSDictionary class]])
+    {
+        //        NSString *errorString = [returnObject objectForKey:@""];
+    }
+    NSDictionary *userInfo = nil;
+    NSArray *userArr = nil;
+    if ([returnObject isKindOfClass:[NSDictionary class]]) {
+        userInfo = (NSDictionary*)returnObject;
+    }
+    else if ([returnObject isKindOfClass:[NSArray class]]) {
+        userArr = (NSArray*)returnObject;
+    }
+    else {
+        return;
+    }
+    switch (requestType)
+    {
+        case SinaGetUserID:
+        {
+            NSNumber *userID = [userInfo objectForKey:@"uid"];
+            
+            NSString *userid = [NSString stringWithFormat:@"%@",userID];
+            [[NSUserDefaults standardUserDefaults]setObject:userID forKey:USER_STORE_USER_ID];
+            break;
+        }
+        case SinaGetHomeLine:
+        {
+            NSArray *arr=[userInfo objectForKey:@"statuses"];
+            if(arr==nil || [arr isEqual:[NSNull null]])
+            {
+                return;
+            }
+            NSMutableArray *statusArr =[[NSMutableArray alloc]initWithCapacity:0];
+            for (id item; in  arr) {
+//                 Status *sts=Status 
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 -(void)requestDidFail:(ASIHTTPRequest*)request
@@ -97,6 +149,7 @@
     [requestQueue addOperation:request];
     [request release];
 }
+
 - (void)setGetUserInfo:(ASIHTTPRequest *)request withRequestType:(RequestType)requestType {
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
     [dict setObject:[NSNumber numberWithInt:requestType] forKey:USER_INFO_KEY_TYPE];
