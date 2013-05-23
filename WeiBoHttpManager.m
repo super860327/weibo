@@ -10,6 +10,7 @@
 #import "Constants.h"
 #import "ASIHTTPRequest.h"
 #import "SBJsonParser.h"
+#import "Status.h"
 
 @implementation WeiBoHttpManager
 
@@ -21,9 +22,13 @@
     self=[super init];
     if(self)
     {
-        requestQueue = [[ASINetworkQueue alloc]init];
-        [requestQueue setRequestDidFinishSelector:@selector(requestDidFinish)];
-        [requestQueue setRequestDidFailSelector:@selector(requestDidFail)];
+        requestQueue = [[ASINetworkQueue alloc] init];
+        [requestQueue setDelegate:self];
+        [requestQueue setRequestDidFailSelector:@selector(requestFailed:)];
+        [requestQueue setRequestDidFinishSelector:@selector(requestFinished:)];
+        //[requestQueue setRequestWillRedirectSelector:@selector(request:willRedirectToURL:)];
+		[requestQueue setShouldCancelAllRequestsOnFailure:NO];
+        [requestQueue setShowAccurateProgress:YES];
     }
     return self;
 }
@@ -32,8 +37,13 @@
     [requestQueue release];
     [super dealloc];
 }
+- (void)start
+{
+	if( [requestQueue isSuspended] )
+		[requestQueue go];
+}
 
--(void)requestDidFinish:(ASIHTTPRequest*)request
+-(void)requestFinished:(ASIHTTPRequest*)request
 {
     //    request.requestID
     NSLog(@"%@", request.responseString);
@@ -66,7 +76,7 @@
         {
             NSNumber *userID = [userInfo objectForKey:@"uid"];
             
-            NSString *userid = [NSString stringWithFormat:@"%@",userID];
+            //NSString *userid = [NSString stringWithFormat:@"%@",userID];
             [[NSUserDefaults standardUserDefaults]setObject:userID forKey:USER_STORE_USER_ID];
             break;
         }
@@ -78,8 +88,11 @@
                 return;
             }
             NSMutableArray *statusArr =[[NSMutableArray alloc]initWithCapacity:0];
-            for (id item; in  arr) {
-//                 Status *sts=Status 
+            for (id item in arr) {
+                Status *sts= [[Status alloc] initWithJSONDictionary:item];
+                NSLog(@"%@",sts.text);
+                //                 Status *sts=Status
+                //                NSLog(@"",item);
             }
             break;
         }
@@ -88,7 +101,7 @@
     }
 }
 
--(void)requestDidFail:(ASIHTTPRequest*)request
+-(void)requestFailed:(ASIHTTPRequest*)request
 {
     NSInteger errorCode= [[request error] code];
     NSLog(@"Error Code: %i, Error Message: %@", errorCode, request.error);
@@ -146,6 +159,32 @@
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     NSLog(@"url=%@",url);
     [self setGetUserInfo:request withRequestType:SinaGetUserID];
+    [requestQueue addOperation:request];
+    [request release];
+}
+-(void)getHomeline:(int64_t)sinceID maxID:(int64_t)maxID count:(int)count page:(int)page baseApp:(int)baseApp feature:(int)feature
+{
+    authToken=[[NSUserDefaults standardUserDefaults]objectForKey:USER_STORE_ACCESS_TOKEN];
+    NSString *userId =[[NSUserDefaults standardUserDefaults]objectForKey:USER_STORE_USER_ID];
+    
+    NSMutableDictionary *params=[NSMutableDictionary dictionaryWithObjectsAndKeys:authToken, @"access_token",nil];
+    if(sinceID>=0)
+    {
+        NSString *tempString =[NSString stringWithFormat:@"%lld",sinceID];
+        [params setObject:tempString forKey:@"since_id"];
+    }
+    if (maxID>=0) {
+        NSString *tempString=[NSString stringWithFormat:@"%lld",maxID];
+        [params setObject:tempString forKey:@"max_id"];
+    }
+    
+    NSString *baseUrl=[NSString stringWithFormat:@"%@/statuses/home_timeline.json",SINA_V2_DOMAIN];
+    NSURL *url=[self generateURL:baseUrl params:params];
+    
+    ASIHTTPRequest *request=[[ASIHTTPRequest alloc]initWithURL:url];
+    [url release];
+    [self setGetUserInfo:request withRequestType:SinaGetHomeLine];
+    
     [requestQueue addOperation:request];
     [request release];
 }

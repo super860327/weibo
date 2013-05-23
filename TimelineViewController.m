@@ -34,6 +34,7 @@
     [super viewDidLoad];
     data=[[NSMutableArray alloc]init];
     httpManager=[[WeiBoHttpManager alloc]init];
+    [httpManager start];
     for (int i=0; i<20; i++)
     {
         [data addObject:[NSString stringWithFormat:@"%d",i]];
@@ -50,12 +51,17 @@
         [self.navigationController pushViewController:webController animated:YES];
         [webController release];
     }
+    //[self getUserID];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
     [self getUserID];
 }
 
 -(void)getUserID
 {
     [httpManager getUserID];
+    [httpManager getHomeline:-1 maxID:-1 count:-1 page:-1 baseApp:-1 feature:-1];
 }
 
 -(BOOL)isNeedToRefreshTheToken
@@ -94,7 +100,11 @@
     
     return cell;
 }
-
+-(void)dealloc
+{
+    [httpManager release];
+    [super dealloc];
+}
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
