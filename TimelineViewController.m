@@ -10,6 +10,8 @@
 #import "Constants.h"
 #import "OAuthWebViewController.h"
 #import "WeiBoHttpManager.h"
+#import "Status.h"
+#import "StatusCell.h"
 
 #define indentify @"Cell"
 
@@ -33,12 +35,10 @@
 {
     [super viewDidLoad];
     data=[[NSMutableArray alloc]init];
-    httpManager=[[WeiBoHttpManager alloc]init];
+    httpManager=[[WeiBoHttpManager alloc]initWithDelegete:self];
     [httpManager start];
-    for (int i=0; i<20; i++)
-    {
-        [data addObject:[NSString stringWithFormat:@"%d",i]];
-    }
+    
+    
     self.title =@"Super";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:indentify];
     
@@ -57,7 +57,15 @@
 {
     [self getUserID];
 }
-
+-(void)getHomeline:(NSMutableArray *)statusarr
+{
+    //    //data = [statusarr copy];
+    //    for (Status *sts in statusarr) {
+    //        [data addObject:sts.text];
+    //    }
+    data=statusarr;
+    [self.tableView reloadData];
+}
 -(void)getUserID
 {
     [httpManager getUserID];
@@ -93,10 +101,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentify forIndexPath:indexPath];
+    static BOOL nibsRegistered = NO;
+    if(!nibsRegistered)
+    {
+        UINib *nib =[UINib nibWithNibName:@"Status" bundle:nil];
+        [tableView registerNib:nib forCellReuseIdentifier:indentify];
+        nibsRegistered = YES;
+    }
     
-    cell.textLabel.text = [data objectAtIndex:indexPath.row];
-    // Configure the cell...
+    StatusCell  *cell = [tableView dequeueReusableCellWithIdentifier:indentify forIndexPath:indexPath];
+    
+    Status *sts= [data objectAtIndex:indexPath.row];
+    cell.text.text =sts.text;
     
     return cell;
 }

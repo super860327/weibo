@@ -9,7 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "ASINetworkQueue.h"
 
-@interface WeiBoHttpManager : NSObject
+
+@protocol WeiBoHttpManagerDelegate<NSObject>
+
+-(void)getHomeline:(NSMutableArray*)statusarr;
+
+@end
+
+@interface WeiBoHttpManager : NSObject 
+{
+    id<WeiBoHttpManagerDelegate> _delegate;
+}
+-(id)initWithDelegete:(id<WeiBoHttpManagerDelegate>)delegate;
 
 -(void)start;
 -(NSURL*)getOauthCodeUrl;

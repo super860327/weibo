@@ -17,11 +17,12 @@
 @synthesize authToken;
 @synthesize requestQueue;
 
--(id)init
+-(id)initWithDelegete:(id<WeiBoHttpManagerDelegate>)delegate
 {
     self=[super init];
     if(self)
     {
+        _delegate=delegate;
         requestQueue = [[ASINetworkQueue alloc] init];
         [requestQueue setDelegate:self];
         [requestQueue setRequestDidFailSelector:@selector(requestFailed:)];
@@ -90,10 +91,9 @@
             NSMutableArray *statusArr =[[NSMutableArray alloc]initWithCapacity:0];
             for (id item in arr) {
                 Status *sts= [[Status alloc] initWithJSONDictionary:item];
-                NSLog(@"%@",sts.text);
-                //                 Status *sts=Status
-                //                NSLog(@"",item);
+                [statusArr addObject:sts];
             }
+            [_delegate getHomeline:statusArr];
             break;
         }
         default:

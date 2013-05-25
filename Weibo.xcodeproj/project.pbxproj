@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF151B701750BD0000EEB9DE /* StatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF151B6F1750BD0000EEB9DE /* StatusCell.m */; };
+		BF151B721750BD2C00EEB9DE /* Status.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF151B711750BD2C00EEB9DE /* Status.xib */; };
 		BF1CAB8717410F48007AF3E9 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1CAB8617410F48007AF3E9 /* TimelineViewController.m */; };
 		BF21E55217411D6A00B14B9D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF21E55117411D6A00B14B9D /* Icon.png */; };
 		BF21E55417411E6600B14B9D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF21E55317411E6600B14B9D /* Icon@2x.png */; };
@@ -68,6 +70,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF151B6E1750BD0000EEB9DE /* StatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusCell.h; sourceTree = "<group>"; };
+		BF151B6F1750BD0000EEB9DE /* StatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusCell.m; sourceTree = "<group>"; };
+		BF151B711750BD2C00EEB9DE /* Status.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Status.xib; sourceTree = "<group>"; };
 		BF1CAB8517410F48007AF3E9 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
 		BF1CAB8617410F48007AF3E9 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
 		BF21E55117411D6A00B14B9D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
@@ -181,6 +186,9 @@
 		BF8C1CD8173FDE4200F3181E = {
 			isa = PBXGroup;
 			children = (
+				BF151B711750BD2C00EEB9DE /* Status.xib */,
+				BF151B6E1750BD0000EEB9DE /* StatusCell.h */,
+				BF151B6F1750BD0000EEB9DE /* StatusCell.m */,
 				BF30E9D2174D000500034FD9 /* Model */,
 				BF2FE3DD174138A7003297B0 /* WeiBoHttpManager.h */,
 				BF2FE3DE174138A7003297B0 /* WeiBoHttpManager.m */,
@@ -397,6 +405,7 @@
 				BF21E55217411D6A00B14B9D /* Icon.png in Resources */,
 				BF21E55417411E6600B14B9D /* Icon@2x.png in Resources */,
 				BF59E9441741336C001C0F0A /* OAuthWebViewController.xib in Resources */,
+				BF151B721750BD2C00EEB9DE /* Status.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +455,7 @@
 				BF59E9431741336C001C0F0A /* OAuthWebViewController.m in Sources */,
 				BF2FE3DF174138A7003297B0 /* WeiBoHttpManager.m in Sources */,
 				BF30E9D5174D001A00034FD9 /* Status.m in Sources */,
+				BF151B701750BD0000EEB9DE /* StatusCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
