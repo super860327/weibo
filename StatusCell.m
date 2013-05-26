@@ -15,6 +15,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        //self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://tp1.sinaimg.cn/1686879832/50/1283204498/1"]]];
     }
     return self;
 }
@@ -27,7 +28,10 @@
 }
 
 - (void)dealloc {
-    [_text release];
+    [_txtContent release];
+    [_userName release];
+    [_profile_image release];
+    [_profile_image2 release];
     [super dealloc];
 }
 @end

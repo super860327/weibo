@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface StatusCell : UITableViewCell
-@property (retain, nonatomic) IBOutlet UILabel *text;
+
+@property (retain, nonatomic) IBOutlet UILabel *txtContent;
+@property (retain, nonatomic) IBOutlet UILabel *userName;
+@property (retain, nonatomic) IBOutlet UIImageView *profile_image;
 
 @end

@@ -34,6 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
     data=[[NSMutableArray alloc]init];
     httpManager=[[WeiBoHttpManager alloc]initWithDelegete:self];
     [httpManager start];
@@ -75,11 +76,9 @@
 -(BOOL)isNeedToRefreshTheToken
 {
     NSDate *expirationDate =[[NSUserDefaults standardUserDefaults]objectForKey:USER_STORE_EXPIRATION_DATE];
-    if(expirationDate ==nil)return YES;
     
-    BOOL boolValue1=(NSOrderedDescending == [expirationDate compare:[NSDate date]]);
-    BOOL boolValue2=(expirationDate != nil);
-    return boolValue1 && boolValue2;
+    return (expirationDate ==nil || NSOrderedAscending == [expirationDate compare:[NSDate date]]);
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,18 +103,30 @@
     static BOOL nibsRegistered = NO;
     if(!nibsRegistered)
     {
-        UINib *nib =[UINib nibWithNibName:@"Status" bundle:nil];
+        UINib *nib =[UINib nibWithNibName:@"StatusCell" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:indentify];
         nibsRegistered = YES;
     }
     
     StatusCell  *cell = [tableView dequeueReusableCellWithIdentifier:indentify forIndexPath:indexPath];
-    
+    //cell.txtContent.numberOfLines=12;
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    cell.backgroundColor=[UIColor clearColor];
+    cell.contentView.backgroundColor=[UIColor clearColor];
     Status *sts= [data objectAtIndex:indexPath.row];
-    cell.text.text =sts.text;
-    
+    cell.txtContent.text =sts.text;
+    cell.userName.text=sts.userName;
+    cell.profile_image.image = sts.imageView;
+ 
     return cell;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //    UITableViewCell *cell=  [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+    //    return cell.frame.size.height;
+    return 220.0f;
+}
+
 -(void)dealloc
 {
     [httpManager release];
@@ -172,6 +183,7 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+
 }
 
 @end

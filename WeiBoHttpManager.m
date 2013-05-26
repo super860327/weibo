@@ -47,7 +47,7 @@
 -(void)requestFinished:(ASIHTTPRequest*)request
 {
     //    request.requestID
-    NSLog(@"%@", request.responseString);
+    //NSLog(@"%@", request.responseString);
     NSDictionary *userInformation =[request userInfo];
     RequestType requestType =[[userInformation objectForKey:USER_INFO_KEY_TYPE]intValue];
     NSString *responseString=[request responseString];
@@ -157,7 +157,7 @@
     NSURL                   *url = [self generateURL:baseUrl params:params];
     
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    NSLog(@"url=%@",url);
+
     [self setGetUserInfo:request withRequestType:SinaGetUserID];
     [requestQueue addOperation:request];
     [request release];

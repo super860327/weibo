@@ -8,14 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		BF151B701750BD0000EEB9DE /* StatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF151B6F1750BD0000EEB9DE /* StatusCell.m */; };
-		BF151B721750BD2C00EEB9DE /* Status.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF151B711750BD2C00EEB9DE /* Status.xib */; };
+		BF151B741751182000EEB9DE /* block_center_background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF151B731751182000EEB9DE /* block_center_background.png */; };
+		BF151B7617511ABC00EEB9DE /* StatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF151B7517511ABC00EEB9DE /* StatusCell.xib */; };
 		BF1CAB8717410F48007AF3E9 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1CAB8617410F48007AF3E9 /* TimelineViewController.m */; };
 		BF21E55217411D6A00B14B9D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF21E55117411D6A00B14B9D /* Icon.png */; };
 		BF21E55417411E6600B14B9D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF21E55317411E6600B14B9D /* Icon@2x.png */; };
 		BF2FE3DF174138A7003297B0 /* WeiBoHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2FE3DE174138A7003297B0 /* WeiBoHttpManager.m */; };
 		BF30E9D5174D001A00034FD9 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = BF30E9D4174D001A00034FD9 /* Status.m */; };
+		BF3D9C76175127A2001F4F5D /* thumb_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D9C75175127A2001F4F5D /* thumb_avatar.png */; };
+		BF3D9C781751295C001F4F5D /* block_foot_background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D9C771751295C001F4F5D /* block_foot_background.png */; };
 		BF59E9431741336C001C0F0A /* OAuthWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59E9411741336C001C0F0A /* OAuthWebViewController.m */; };
 		BF59E9441741336C001C0F0A /* OAuthWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF59E9421741336C001C0F0A /* OAuthWebViewController.xib */; };
+		BF897C4017519C38004D387A /* main_background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF897C3F17519C38004D387A /* main_background.png */; };
 		BF8C1CE5173FDE4200F3181E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE4173FDE4200F3181E /* UIKit.framework */; };
 		BF8C1CE7173FDE4200F3181E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE6173FDE4200F3181E /* Foundation.framework */; };
 		BF8C1CE9173FDE4200F3181E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE8173FDE4200F3181E /* CoreGraphics.framework */; };
@@ -72,7 +76,8 @@
 /* Begin PBXFileReference section */
 		BF151B6E1750BD0000EEB9DE /* StatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusCell.h; sourceTree = "<group>"; };
 		BF151B6F1750BD0000EEB9DE /* StatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusCell.m; sourceTree = "<group>"; };
-		BF151B711750BD2C00EEB9DE /* Status.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Status.xib; sourceTree = "<group>"; };
+		BF151B731751182000EEB9DE /* block_center_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = block_center_background.png; path = ../block_center_background.png; sourceTree = "<group>"; };
+		BF151B7517511ABC00EEB9DE /* StatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusCell.xib; sourceTree = "<group>"; };
 		BF1CAB8517410F48007AF3E9 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
 		BF1CAB8617410F48007AF3E9 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
 		BF21E55117411D6A00B14B9D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
@@ -81,10 +86,13 @@
 		BF2FE3DE174138A7003297B0 /* WeiBoHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiBoHttpManager.m; sourceTree = "<group>"; };
 		BF30E9D3174D001A00034FD9 /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
 		BF30E9D4174D001A00034FD9 /* Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Status.m; sourceTree = "<group>"; };
+		BF3D9C75175127A2001F4F5D /* thumb_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thumb_avatar.png; path = ../thumb_avatar.png; sourceTree = "<group>"; };
+		BF3D9C771751295C001F4F5D /* block_foot_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = block_foot_background.png; path = ../block_foot_background.png; sourceTree = "<group>"; };
 		BF59E93F17413149001C0F0A /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		BF59E9401741336C001C0F0A /* OAuthWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthWebViewController.h; sourceTree = "<group>"; };
 		BF59E9411741336C001C0F0A /* OAuthWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthWebViewController.m; sourceTree = "<group>"; };
 		BF59E9421741336C001C0F0A /* OAuthWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OAuthWebViewController.xib; sourceTree = "<group>"; };
+		BF897C3F17519C38004D387A /* main_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = main_background.png; path = ../main_background.png; sourceTree = "<group>"; };
 		BF8C1CE1173FDE4200F3181E /* Weibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8C1CE4173FDE4200F3181E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BF8C1CE6173FDE4200F3181E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -186,7 +194,7 @@
 		BF8C1CD8173FDE4200F3181E = {
 			isa = PBXGroup;
 			children = (
-				BF151B711750BD2C00EEB9DE /* Status.xib */,
+				BF151B7517511ABC00EEB9DE /* StatusCell.xib */,
 				BF151B6E1750BD0000EEB9DE /* StatusCell.h */,
 				BF151B6F1750BD0000EEB9DE /* StatusCell.m */,
 				BF30E9D2174D000500034FD9 /* Model */,
@@ -242,6 +250,10 @@
 		BF8C1CEB173FDE4200F3181E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BF897C3F17519C38004D387A /* main_background.png */,
+				BF3D9C771751295C001F4F5D /* block_foot_background.png */,
+				BF3D9C75175127A2001F4F5D /* thumb_avatar.png */,
+				BF151B731751182000EEB9DE /* block_center_background.png */,
 				BF21E55317411E6600B14B9D /* Icon@2x.png */,
 				BF21E55117411D6A00B14B9D /* Icon.png */,
 				BF8C1CEC173FDE4200F3181E /* Weibo-Info.plist */,
@@ -405,7 +417,11 @@
 				BF21E55217411D6A00B14B9D /* Icon.png in Resources */,
 				BF21E55417411E6600B14B9D /* Icon@2x.png in Resources */,
 				BF59E9441741336C001C0F0A /* OAuthWebViewController.xib in Resources */,
-				BF151B721750BD2C00EEB9DE /* Status.xib in Resources */,
+				BF151B741751182000EEB9DE /* block_center_background.png in Resources */,
+				BF151B7617511ABC00EEB9DE /* StatusCell.xib in Resources */,
+				BF3D9C76175127A2001F4F5D /* thumb_avatar.png in Resources */,
+				BF3D9C781751295C001F4F5D /* block_foot_background.png in Resources */,
+				BF897C4017519C38004D387A /* main_background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,8 @@
 @synthesize statusKey=_statusKey;
 @synthesize createdAt =_createdAt;
 @synthesize text =_text;
+@synthesize userName=_userName;
+@synthesize imageView=_imageView;
 
 -(id)init
 {
@@ -35,8 +37,17 @@
         self.createdAt=[self getTimeValueForKey:dic Key:@"created_at" defaultValue:0];
         self.text =[self getStringValueForKey:dic Key:@"text" defaultValue:@""];
         
-        
-        // self.statusId=[getLongLongValueForKey ]
+        NSDictionary* userDic = [dic objectForKey:@"user"];
+		if (userDic)
+        {
+            self.userName=[self getStringValueForKey:userDic Key:@"name" defaultValue:@""];
+            NSString *image_url=[self getStringValueForKey:userDic Key:@"profile_image_url" defaultValue:@""];
+            self.imageView = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:image_url]]];
+        }
+        else
+        {
+            NSLog(@"xxx");
+        }
     }
     return self;
 }
