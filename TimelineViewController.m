@@ -124,7 +124,7 @@
 {
     //    UITableViewCell *cell=  [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
     //    return cell.frame.size.height;
-    return 220.0f;
+    return 240.0f;
 }
 
 -(void)dealloc

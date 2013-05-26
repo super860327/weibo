@@ -20,6 +20,8 @@
 		BF59E9431741336C001C0F0A /* OAuthWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59E9411741336C001C0F0A /* OAuthWebViewController.m */; };
 		BF59E9441741336C001C0F0A /* OAuthWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF59E9421741336C001C0F0A /* OAuthWebViewController.xib */; };
 		BF897C4017519C38004D387A /* main_background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF897C3F17519C38004D387A /* main_background.png */; };
+		BF897C4217523400004D387A /* icon_tag.png in Resources */ = {isa = PBXBuildFile; fileRef = BF897C4117523400004D387A /* icon_tag.png */; };
+		BF897C4417524D3A004D387A /* txt in Resources */ = {isa = PBXBuildFile; fileRef = BF897C4317524D3A004D387A /* txt */; };
 		BF8C1CE5173FDE4200F3181E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE4173FDE4200F3181E /* UIKit.framework */; };
 		BF8C1CE7173FDE4200F3181E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE6173FDE4200F3181E /* Foundation.framework */; };
 		BF8C1CE9173FDE4200F3181E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE8173FDE4200F3181E /* CoreGraphics.framework */; };
@@ -93,6 +95,8 @@
 		BF59E9411741336C001C0F0A /* OAuthWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthWebViewController.m; sourceTree = "<group>"; };
 		BF59E9421741336C001C0F0A /* OAuthWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OAuthWebViewController.xib; sourceTree = "<group>"; };
 		BF897C3F17519C38004D387A /* main_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = main_background.png; path = ../main_background.png; sourceTree = "<group>"; };
+		BF897C4117523400004D387A /* icon_tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_tag.png; path = ../icon_tag.png; sourceTree = "<group>"; };
+		BF897C4317524D3A004D387A /* txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = txt; path = ../../txt; sourceTree = "<group>"; };
 		BF8C1CE1173FDE4200F3181E /* Weibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8C1CE4173FDE4200F3181E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BF8C1CE6173FDE4200F3181E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -194,6 +198,7 @@
 		BF8C1CD8173FDE4200F3181E = {
 			isa = PBXGroup;
 			children = (
+				BF897C4317524D3A004D387A /* txt */,
 				BF151B7517511ABC00EEB9DE /* StatusCell.xib */,
 				BF151B6E1750BD0000EEB9DE /* StatusCell.h */,
 				BF151B6F1750BD0000EEB9DE /* StatusCell.m */,
@@ -250,6 +255,7 @@
 		BF8C1CEB173FDE4200F3181E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BF897C4117523400004D387A /* icon_tag.png */,
 				BF897C3F17519C38004D387A /* main_background.png */,
 				BF3D9C771751295C001F4F5D /* block_foot_background.png */,
 				BF3D9C75175127A2001F4F5D /* thumb_avatar.png */,
@@ -422,6 +428,8 @@
 				BF3D9C76175127A2001F4F5D /* thumb_avatar.png in Resources */,
 				BF3D9C781751295C001F4F5D /* block_foot_background.png in Resources */,
 				BF897C4017519C38004D387A /* main_background.png in Resources */,
+				BF897C4217523400004D387A /* icon_tag.png in Resources */,
+				BF897C4417524D3A004D387A /* txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

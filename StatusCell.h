@@ -13,5 +13,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *txtContent;
 @property (retain, nonatomic) IBOutlet UILabel *userName;
 @property (retain, nonatomic) IBOutlet UIImageView *profile_image;
-
+// retweeted_status.text
+// retweeted_status.bmiddle_pic
 @end
