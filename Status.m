@@ -32,7 +32,6 @@
     if(self)
     {
         self.statusId= [self getLongLongValueForKey:dic Key:@"id" delaultValue:-1];
-        
         self.statusKey =[[NSNumber alloc]initWithLongLong:self.statusId];
         self.createdAt=[self getTimeValueForKey:dic Key:@"created_at" defaultValue:0];
         self.text =[self getStringValueForKey:dic Key:@"text" defaultValue:@""];
@@ -44,17 +43,15 @@
             NSString *image_url=[self getStringValueForKey:userDic Key:@"profile_image_url" defaultValue:@""];
             self.imageView = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:image_url]]];
         }
-        else
-        {
-            NSLog(@"xxx");
-        }
     }
     return self;
 }
+
 -(long long)getLongLongValueForKey:(NSDictionary*)dic Key:(NSString*)key delaultValue:(long long)defaultValue
 {
     return [dic objectForKey:key]==[NSNull null]?defaultValue:[[dic objectForKey:key]longLongValue];
 }
+
 - (time_t)getTimeValueForKey:(NSDictionary*)dic Key:(NSString *)key defaultValue:(time_t)defaultValue {
     NSString *stringTime   = [dic objectForKey:key];
     if ((id)stringTime == [NSNull null]) {
@@ -72,7 +69,8 @@
     }
     return defaultValue;
 }
-- (NSString *)getStringValueForKey:(NSDictionary*)dic Key:(NSString *)key defaultValue:(NSString *)defaultValue {
+
+-(NSString *)getStringValueForKey:(NSDictionary*)dic Key:(NSString *)key defaultValue:(NSString *)defaultValue {
     return [dic objectForKey:key] == nil || [dic objectForKey:key] == [NSNull null]
     ? defaultValue : [dic objectForKey:key];
 }

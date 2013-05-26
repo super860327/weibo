@@ -14,8 +14,8 @@
 @property (nonatomic,strong) NSNumber *statusKey;
 @property time_t createdAt;
 @property (nonatomic,copy)NSString *text;
-@property (nonatomic,strong) NSString *userName;
-@property (nonatomic,strong) UIImage *imageView;
+@property (nonatomic,copy) NSString *userName;
+@property (nonatomic,copy) UIImage *imageView;
 
 -(Status*)initWithJSONDictionary:(NSDictionary *)dic;
 

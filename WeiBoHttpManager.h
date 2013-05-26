@@ -20,14 +20,14 @@
 {
     id<WeiBoHttpManagerDelegate> _delegate;
 }
--(id)initWithDelegete:(id<WeiBoHttpManagerDelegate>)delegate;
+
+@property (nonatomic,copy)NSString *authToken;
+@property (nonatomic,retain) ASINetworkQueue *requestQueue;
 
 -(void)start;
 -(NSURL*)getOauthCodeUrl;
 -(void)getUserID;
 -(void)getHomeline:(int64_t)sinceID maxID:(int64_t)maxID count:(int)count page:(int)page baseApp:(int)baseApp feature:(int)feature;
-@property (nonatomic,copy)NSString *authToken;
-@property (nonatomic,retain) ASINetworkQueue *requestQueue;
 
 @end
 

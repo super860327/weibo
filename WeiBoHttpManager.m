@@ -33,11 +33,14 @@
     }
     return self;
 }
+
 -(void)dealloc
 {
+    [authToken release];
     [requestQueue release];
     [super dealloc];
 }
+
 - (void)start
 {
 	if( [requestQueue isSuspended] )
