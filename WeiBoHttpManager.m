@@ -36,7 +36,6 @@
 
 -(void)dealloc
 {
-    [authToken release];
     [requestQueue release];
     [super dealloc];
 }
@@ -49,8 +48,6 @@
 
 -(void)requestFinished:(ASIHTTPRequest*)request
 {
-    //    request.requestID
-    //NSLog(@"%@", request.responseString);
     NSDictionary *userInformation =[request userInfo];
     RequestType requestType =[[userInformation objectForKey:USER_INFO_KEY_TYPE]intValue];
     NSString *responseString=[request responseString];
@@ -59,10 +56,6 @@
     id returnObject =[parser objectWithString:responseString];
     [parser release];
     
-    if([returnObject isKindOfClass:[NSDictionary class]])
-    {
-        //        NSString *errorString = [returnObject objectForKey:@""];
-    }
     NSDictionary *userInfo = nil;
     NSArray *userArr = nil;
     if ([returnObject isKindOfClass:[NSDictionary class]]) {
@@ -79,23 +72,22 @@
         case SinaGetUserID:
         {
             NSNumber *userID = [userInfo objectForKey:@"uid"];
-            
-            //NSString *userid = [NSString stringWithFormat:@"%@",userID];
             [[NSUserDefaults standardUserDefaults]setObject:userID forKey:USER_STORE_USER_ID];
             break;
         }
         case SinaGetHomeLine:
         {
             NSArray *arr=[userInfo objectForKey:@"statuses"];
-            if(arr==nil || [arr isEqual:[NSNull null]])
+            if(arr == nil || [arr isEqual:[NSNull null]])
             {
-                return;
+                break;
             }
             NSMutableArray *statusArr =[[NSMutableArray alloc]initWithCapacity:0];
             for (id item in arr) {
                 NSLog(@"%@",item);
                 Status *sts= [[Status alloc] initWithJSONDictionary:item];
                 [statusArr addObject:sts];
+                [sts release];
             }
             [_delegate getHomeline:statusArr];
             break;
@@ -111,11 +103,9 @@
     NSLog(@"Error Code: %i, Error Message: %@", errorCode, request.error);
 }
 
-
 -(NSURL*)getOauthCodeUrl //留给webview用
 {
     //https://api.weibo.com/oauth2/authorize
-    
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 								   SINA_APP_KEY,                    @"client_id",       //申请的appkey
 								   @"token",                        @"response_type",   //access_token
@@ -150,6 +140,7 @@
 		return [NSURL URLWithString:baseURL];
 	}
 }
+
 -(void)getUserID
 {
     //https://api.weibo.com/2/account/get_uid.json
@@ -166,6 +157,7 @@
     [requestQueue addOperation:request];
     [request release];
 }
+
 -(void)getHomeline:(int64_t)sinceID maxID:(int64_t)maxID count:(int)count page:(int)page baseApp:(int)baseApp feature:(int)feature
 {
     authToken=[[NSUserDefaults standardUserDefaults]objectForKey:USER_STORE_ACCESS_TOKEN];
@@ -186,7 +178,7 @@
     NSURL *url=[self generateURL:baseUrl params:params];
     
     ASIHTTPRequest *request=[[ASIHTTPRequest alloc]initWithURL:url];
-    [url release];
+
     [self setGetUserInfo:request withRequestType:SinaGetHomeLine];
     
     [requestQueue addOperation:request];

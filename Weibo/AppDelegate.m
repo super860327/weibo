@@ -27,11 +27,11 @@
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:viewController];
     [viewController release];
     
-    self.tabBarController =[[UITabBarController alloc]init];
-    self.tabBarController.viewControllers=[NSArray  arrayWithObjects:nav, nil];
-    [nav release];
+//    self.tabBarController =[[UITabBarController alloc]init];
+//    self.tabBarController.viewControllers=[NSArray  arrayWithObjects:nav, nil];
+    //[nav release];
 
-    self.window.rootViewController = self.tabBarController;
+    self.window.rootViewController =nav;// self.tabBarController;
         
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

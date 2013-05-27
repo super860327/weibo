@@ -8,13 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ASINetworkQueue.h"
-
-
-@protocol WeiBoHttpManagerDelegate<NSObject>
-
--(void)getHomeline:(NSMutableArray*)statusarr;
-
-@end
+#import "WeiBoHttpManagerDelegate.h"
 
 @interface WeiBoHttpManager : NSObject 
 {
@@ -24,13 +18,13 @@
 @property (nonatomic,copy)NSString *authToken;
 @property (nonatomic,retain) ASINetworkQueue *requestQueue;
 
+-(id)initWithDelegete:(id<WeiBoHttpManagerDelegate>)delegate;
 -(void)start;
 -(NSURL*)getOauthCodeUrl;
 -(void)getUserID;
 -(void)getHomeline:(int64_t)sinceID maxID:(int64_t)maxID count:(int)count page:(int)page baseApp:(int)baseApp feature:(int)feature;
 
 @end
-
 
 typedef enum {
     SinaGetOauthCode = 0,           //authorize_code

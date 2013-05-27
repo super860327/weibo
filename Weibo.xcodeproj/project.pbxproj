@@ -21,7 +21,6 @@
 		BF59E9441741336C001C0F0A /* OAuthWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF59E9421741336C001C0F0A /* OAuthWebViewController.xib */; };
 		BF897C4017519C38004D387A /* main_background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF897C3F17519C38004D387A /* main_background.png */; };
 		BF897C4217523400004D387A /* icon_tag.png in Resources */ = {isa = PBXBuildFile; fileRef = BF897C4117523400004D387A /* icon_tag.png */; };
-		BF897C4417524D3A004D387A /* txt in Resources */ = {isa = PBXBuildFile; fileRef = BF897C4317524D3A004D387A /* txt */; };
 		BF8C1CE5173FDE4200F3181E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE4173FDE4200F3181E /* UIKit.framework */; };
 		BF8C1CE7173FDE4200F3181E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE6173FDE4200F3181E /* Foundation.framework */; };
 		BF8C1CE9173FDE4200F3181E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C1CE8173FDE4200F3181E /* CoreGraphics.framework */; };
@@ -31,6 +30,7 @@
 		BF8C1CF7173FDE4200F3181E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BF8C1CF6173FDE4200F3181E /* Default.png */; };
 		BF8C1CF9173FDE4200F3181E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF8C1CF8173FDE4200F3181E /* Default@2x.png */; };
 		BF8C1CFB173FDE4200F3181E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF8C1CFA173FDE4200F3181E /* Default-568h@2x.png */; };
+		BF8D834D1753C54200C873D2 /* txt in Resources */ = {isa = PBXBuildFile; fileRef = BF8D834C1753C54200C873D2 /* txt */; };
 		BFCA26FA174A80170060C0ED /* SBJsonBase.h in Sources */ = {isa = PBXBuildFile; fileRef = BF8C1D2F173FEA4000F3181E /* SBJsonBase.h */; };
 		BFCA26FB174A80170060C0ED /* SBJsonParser.h in Sources */ = {isa = PBXBuildFile; fileRef = BF8C1D31173FEA4000F3181E /* SBJsonParser.h */; };
 		BFCA26FC174A80170060C0ED /* SBJsonWriter.h in Sources */ = {isa = PBXBuildFile; fileRef = BF8C1D33173FEA4000F3181E /* SBJsonWriter.h */; };
@@ -96,7 +96,6 @@
 		BF59E9421741336C001C0F0A /* OAuthWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OAuthWebViewController.xib; sourceTree = "<group>"; };
 		BF897C3F17519C38004D387A /* main_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = main_background.png; path = ../main_background.png; sourceTree = "<group>"; };
 		BF897C4117523400004D387A /* icon_tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_tag.png; path = ../icon_tag.png; sourceTree = "<group>"; };
-		BF897C4317524D3A004D387A /* txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = txt; path = ../../txt; sourceTree = "<group>"; };
 		BF8C1CE1173FDE4200F3181E /* Weibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8C1CE4173FDE4200F3181E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BF8C1CE6173FDE4200F3181E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -151,6 +150,8 @@
 		BF8C1D32173FEA4000F3181E /* SBJsonParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		BF8C1D33173FEA4000F3181E /* SBJsonWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		BF8C1D34173FEA4000F3181E /* SBJsonWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		BF8D834B17539DE100C873D2 /* WeiBoHttpManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeiBoHttpManagerDelegate.h; sourceTree = "<group>"; };
+		BF8D834C1753C54200C873D2 /* txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = txt; sourceTree = "<group>"; };
 		BFD2EB6B174299AB00C51FEA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		BFD2EB6D17429A6000C51FEA /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		BFD2EB6F17429AA100C51FEA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -198,7 +199,8 @@
 		BF8C1CD8173FDE4200F3181E = {
 			isa = PBXGroup;
 			children = (
-				BF897C4317524D3A004D387A /* txt */,
+				BF8D834C1753C54200C873D2 /* txt */,
+				BF8D834B17539DE100C873D2 /* WeiBoHttpManagerDelegate.h */,
 				BF151B7517511ABC00EEB9DE /* StatusCell.xib */,
 				BF151B6E1750BD0000EEB9DE /* StatusCell.h */,
 				BF151B6F1750BD0000EEB9DE /* StatusCell.m */,
@@ -429,7 +431,7 @@
 				BF3D9C781751295C001F4F5D /* block_foot_background.png in Resources */,
 				BF897C4017519C38004D387A /* main_background.png in Resources */,
 				BF897C4217523400004D387A /* icon_tag.png in Resources */,
-				BF897C4417524D3A004D387A /* txt in Resources */,
+				BF8D834D1753C54200C873D2 /* txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
