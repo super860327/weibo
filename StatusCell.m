@@ -28,9 +28,11 @@
 }
 
 - (void)dealloc {
-    [_txtContent release];
+    [_thumbnail_pic release];
     [_userName release];
     [_profile_image release];
+    [_ContentView release];
+    [_textContent release];
     [super dealloc];
 }
 @end

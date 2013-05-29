@@ -84,7 +84,7 @@
             }
             NSMutableArray *statusArr =[[NSMutableArray alloc]initWithCapacity:0];
             for (id item in arr) {
-                NSLog(@"%@",item);
+                //NSLog(@"%@",item);
                 Status *sts= [[Status alloc] initWithJSONDictionary:item];
                 [statusArr addObject:sts];
                 [sts release];

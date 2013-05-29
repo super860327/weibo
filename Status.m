@@ -16,6 +16,7 @@
 @synthesize text =_text;
 @synthesize userName=_userName;
 @synthesize imageView=_imageView;
+@synthesize thumbnail_pic=_thumbnail_pic;
 
 -(id)init
 {
@@ -36,12 +37,18 @@
         self.createdAt=[self getTimeValueForKey:dic Key:@"created_at" defaultValue:0];
         self.text =[self getStringValueForKey:dic Key:@"text" defaultValue:@""];
         
+        NSString *thumb=[self getStringValueForKey:dic Key:@"thumbnail_pic" defaultValue:@""];
+        if(thumb)
+        {
+            //self.thumbnail_pic=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:thumb]]];
+        }
+        
         NSDictionary* userDic = [dic objectForKey:@"user"];
 		if (userDic)
         {
             self.userName=[self getStringValueForKey:userDic Key:@"name" defaultValue:@""];
             NSString *image_url=[self getStringValueForKey:userDic Key:@"profile_image_url" defaultValue:@""];
-            self.imageView = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:image_url]]];
+            //self.imageView = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:image_url]]];
         }
     }
     return self;
