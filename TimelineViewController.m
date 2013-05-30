@@ -102,43 +102,36 @@
         nibsRegistered = YES;
     }
     
-    StatusCell  *cell = [tableView dequeueReusableCellWithIdentifier:indentify forIndexPath:indexPath];
-    //cell r
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    cell.backgroundColor=[UIColor clearColor];
-    //cell.contentView.backgroundColor=[UIColor clearColor];
-    Status *sts= [data objectAtIndex:indexPath.row];
-    //cell.txtContent.text =sts.text;
-    //cell.ContentView.text=sts.text;
-    //cell.ContentView.contentMode =
-    cell.userName.text=sts.userName;
+    StatusCell  *cell = [tableView dequeueReusableCellWithIdentifier:indentify];
     
+    Status *sts= [data objectAtIndex:indexPath.row];
+    
+    cell.userName.text=sts.userName;
     float fPadding = 16.0; // 8.0px x 2
     CGSize constraint = CGSizeMake(280 - fPadding, CGFLOAT_MAX);
     
     UIFont *cellFont =  [UIFont systemFontOfSize:14.0];
     CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    //cell.ContentView.autoresizingMask= YES;
     float fHeight = size.height;
-    NSLog(@"cell: %f",fHeight);
-    //[cell.ContentView setFrame:CGRectMake(20, 28, 280, fHeight)];
-    [cell.textContent layoutIfNeeded];
-        [cell.textContent needsUpdateConstraints ];    
-    [cell.textContent setFrame:CGRectMake(20, 28, 280, fHeight)];
-    cell.textContent.text = sts.text;
-    cell.textContent.numberOfLines = 10;
-     cell.textContent.opaque = NO;
-    [cell sizeToFit];
-    NSLog(@"%@",sts.text);
-    cell.textContent.lineBreakMode = NSLineBreakByWordWrapping;
-//cell.textContent.
-    //NSLog(@"Row index height Cell %f",fHeight);
-
-    //cell.profile_image.image = sts.imageView;
-    //cell.thumbnail_pic.image = sts.thumbnail_pic;
     
-    //    CGRect rect = CGRectMake(0, 0, 200, 100);
-    //    [cell setFrame:rect];
+    
+    // cell.textContent.text = sts.text;
+    
+    //cell.textContent.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    [cell.textContent setFrame:CGRectMake(20, 28, 280, fHeight)];
+    NSLog(@"row=%d,index=%d",indexPath.row,indexPath.row%2);
+    if(indexPath.row%2==0)
+    {
+        cell.contentView.backgroundColor= [UIColor redColor];
+    }
+    else
+    {
+        cell.contentView.backgroundColor= [UIColor blueColor];
+        
+    }
+    cell.textContent.text = sts.text;
+    
     return cell;
 }
 
@@ -150,12 +143,11 @@
     CGSize constraint = CGSizeMake(280 - fPadding, CGFLOAT_MAX);
     
     UIFont *cellFont =  [UIFont systemFontOfSize:14.0];
-    CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByCharWrapping];
+    CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     
     float fHeight = size.height;
-       NSLog(@"height: %f",fHeight);
-    //NSLog(@"Row index height %f",fHeight);
-    return fHeight+58;
+    
+    return fHeight+88;
 }
 
 -(void)dealloc
