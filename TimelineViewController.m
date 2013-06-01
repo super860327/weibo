@@ -96,6 +96,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static BOOL nibsRegistered = NO;
+    CGFloat yPosition =0.0f;
+    
     if(!nibsRegistered)
     {
         UINib *nib =[UINib nibWithNibName:@"StatusCell" bundle:nil];
@@ -112,33 +114,70 @@
     UIFont *cellFont =  [UIFont systemFontOfSize:14.0];
     CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     float fHeight = size.height;
+    
+    yPosition=28;
+    UIImageView* centerimage = (UIImageView*)[cell.contentView viewWithTag:2];
+    if(!centerimage)
+    {
+        centerimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"block_center_background.png"]];
+        [cell.contentView addSubview:centerimage];
+        [centerimage setTag:2];
+        centerimage.contentMode= UIViewContentModeScaleToFill;
+        [centerimage release];
+    }
+    centerimage.frame = CGRectMake(0, 0, 320, fHeight+28);
+    
+    UIImageView* avatarimage = (UIImageView*)[cell.contentView viewWithTag:4];
+    if(!avatarimage)
+    {
+        avatarimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Icon.png"]];
+        avatarimage.contentMode = UIViewContentModeScaleToFill;
+        [cell.contentView addSubview:avatarimage];
+        [avatarimage setTag:4];
+        avatarimage.contentMode= UIViewContentModeScaleToFill;
+        [avatarimage release];
+    }
+    avatarimage.frame = CGRectMake(15, 5, 24, 24);
+    
+    UILabel *lblHeader =(UILabel*)[cell.contentView viewWithTag:1];
+    if(!lblHeader)
+    {
+        lblHeader = [[UILabel alloc]init];
+        lblHeader.backgroundColor=[UIColor clearColor];
+        [lblHeader setFont:[UIFont fontWithName:@"Arial" size:14]];
+        lblHeader.textColor=[UIColor brownColor];
+        [cell.contentView addSubview:lblHeader];
+    }
+    lblHeader.frame=CGRectMake(45, 5, 200, 30);
+    lblHeader.text = sts.userName == nil ? @"匿名" : sts.userName;
+    
     UILabel *lbl =(UILabel*)[cell.contentView viewWithTag:1];
     if(!lbl)
     {
-        lbl = [[UILabel alloc]initWithFrame:CGRectMake(20, 28, 280, fHeight)];
-        
+        lbl = [[UILabel alloc]init];
         lbl.backgroundColor=[UIColor clearColor];
-        lbl.font = [UIFont systemFontOfSize:14.0];
-        lbl.layer.borderWidth = 2.0;
+        [lbl setFont:[UIFont fontWithName:@"Arial" size:14]];
         lbl.tag = 1;
         lbl.lineBreakMode= NSLineBreakByWordWrapping;
         lbl.numberOfLines = 10;
         [cell.contentView addSubview:lbl];
         [lbl release];
     }
-    lbl.frame=CGRectMake(20, 28, 280, fHeight);
+    lbl.frame=CGRectMake(20, yPosition, 280, fHeight);
     lbl.text = sts.text;
     
-    if(indexPath.row%2==0)
+    
+    yPosition=28+fHeight;
+    UIImageView* imageViewfoot = (UIImageView*)[cell.contentView viewWithTag:3];
+    if(!imageViewfoot)
     {
-        cell.contentView.backgroundColor= [UIColor redColor];
+        imageViewfoot=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"block_foot_background.png"]];
+        [cell.contentView addSubview:imageViewfoot];
+        [imageViewfoot setTag:3];
+        [imageViewfoot release];
     }
-    else
-    {
-        cell.contentView.backgroundColor= [UIColor blueColor];
-        
-    }
-    //NSLog(@"lbl height %f, string: %@",fHeight,sts.text);
+    imageViewfoot.frame = CGRectMake(0, yPosition, 320, 15);
+    
     return cell;
 }
 
@@ -153,8 +192,7 @@
     CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     
     float fHeight = size.height;
-    NSLog(@"index %d, Height %f",indexPath.row,fHeight);
-    return fHeight+35;
+    return fHeight+40;
 }
 
 -(void)dealloc
