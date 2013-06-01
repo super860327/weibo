@@ -12,6 +12,7 @@
 #import "WeiBoHttpManager.h"
 #import "Status.h"
 #import "StatusCell.h"
+#import "QuartzCore/QuartzCore.h"
 
 #define indentify @"Cell"
 
@@ -102,25 +103,32 @@
         nibsRegistered = YES;
     }
     
-    StatusCell  *cell = [tableView dequeueReusableCellWithIdentifier:indentify];
-    
     Status *sts= [data objectAtIndex:indexPath.row];
-    
+    StatusCell  *cell = [tableView dequeueReusableCellWithIdentifier:indentify];
     cell.userName.text=sts.userName;
+    
     float fPadding = 16.0; // 8.0px x 2
     CGSize constraint = CGSizeMake(280 - fPadding, CGFLOAT_MAX);
-    
     UIFont *cellFont =  [UIFont systemFontOfSize:14.0];
     CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     float fHeight = size.height;
+    UILabel *lbl =(UILabel*)[cell.contentView viewWithTag:1];
+    if(!lbl)
+    {
+        lbl = [[UILabel alloc]initWithFrame:CGRectMake(20, 28, 280, fHeight)];
+        
+        lbl.backgroundColor=[UIColor clearColor];
+        lbl.font = [UIFont systemFontOfSize:14.0];
+        lbl.layer.borderWidth = 2.0;
+        lbl.tag = 1;
+        lbl.lineBreakMode= NSLineBreakByWordWrapping;
+        lbl.numberOfLines = 10;
+        [cell.contentView addSubview:lbl];
+        [lbl release];
+    }
+    lbl.frame=CGRectMake(20, 28, 280, fHeight);
+    lbl.text = sts.text;
     
-    
-    // cell.textContent.text = sts.text;
-    
-    //cell.textContent.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    [cell.textContent setFrame:CGRectMake(20, 28, 280, fHeight)];
-    NSLog(@"row=%d,index=%d",indexPath.row,indexPath.row%2);
     if(indexPath.row%2==0)
     {
         cell.contentView.backgroundColor= [UIColor redColor];
@@ -130,8 +138,7 @@
         cell.contentView.backgroundColor= [UIColor blueColor];
         
     }
-    cell.textContent.text = sts.text;
-    
+    //NSLog(@"lbl height %f, string: %@",fHeight,sts.text);
     return cell;
 }
 
@@ -146,8 +153,8 @@
     CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     
     float fHeight = size.height;
-    
-    return fHeight+88;
+    NSLog(@"index %d, Height %f",indexPath.row,fHeight);
+    return fHeight+35;
 }
 
 -(void)dealloc
