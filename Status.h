@@ -16,7 +16,8 @@
 @property (nonatomic,copy)NSString *text;
 @property (nonatomic,copy) NSString *userName;
 @property (nonatomic,copy) UIImage *imageView;
-@property (nonatomic,copy) UIImage *thumbnail_pic;
+//@property (nonatomic,copy) UIImage *thumbnail_pic;
+@property (nonatomic,copy) NSString* thumbnail_pic;
 
 -(Status*)initWithJSONDictionary:(NSDictionary *)dic;
 

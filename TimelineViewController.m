@@ -36,7 +36,6 @@
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
-    //data=[[NSMutableArray alloc]init];
     httpManager=[[WeiBoHttpManager alloc]initWithDelegete:self];
     [httpManager start];
     
@@ -95,51 +94,39 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static BOOL nibsRegistered = NO;
     CGFloat yPosition =0.0f;
-    
-    if(!nibsRegistered)
-    {
-        UINib *nib =[UINib nibWithNibName:@"StatusCell" bundle:nil];
-        [tableView registerNib:nib forCellReuseIdentifier:indentify];
-        nibsRegistered = YES;
-    }
     
     Status *sts= [data objectAtIndex:indexPath.row];
     StatusCell  *cell = [tableView dequeueReusableCellWithIdentifier:indentify];
-    cell.userName.text=sts.userName;
+    if(!cell)
+    {
+        cell = [[StatusCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentify];
+    }
+    cell.selectionStyle= UITableViewCellSelectionStyleNone;
     
     float fPadding = 16.0; // 8.0px x 2
     CGSize constraint = CGSizeMake(280 - fPadding, CGFLOAT_MAX);
     UIFont *cellFont =  [UIFont systemFontOfSize:14.0];
     CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    float fHeight = size.height;
+    float lblContentHeight = size.height;
     
-    yPosition=28;
-    UIImageView* centerimage = (UIImageView*)[cell.contentView viewWithTag:2];
-    if(!centerimage)
-    {
-        centerimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"block_center_background.png"]];
-        [cell.contentView addSubview:centerimage];
-        [centerimage setTag:2];
-        centerimage.contentMode= UIViewContentModeScaleToFill;
-        [centerimage release];
-    }
-    centerimage.frame = CGRectMake(0, 0, 320, fHeight+28);
-    
-    UIImageView* avatarimage = (UIImageView*)[cell.contentView viewWithTag:4];
+    yPosition=5;
+    int tag=1;
+    UIImageView* avatarimage = (UIImageView*)[cell.contentView viewWithTag:tag];
     if(!avatarimage)
     {
         avatarimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Icon.png"]];
         avatarimage.contentMode = UIViewContentModeScaleToFill;
         [cell.contentView addSubview:avatarimage];
-        [avatarimage setTag:4];
+        [avatarimage setTag:tag];
         avatarimage.contentMode= UIViewContentModeScaleToFill;
         [avatarimage release];
     }
-    avatarimage.frame = CGRectMake(15, 5, 24, 24);
+    avatarimage.image=[UIImage imageNamed:@"Icon.png"];
+    avatarimage.frame = CGRectMake(15, yPosition, 24, 24);
     
-    UILabel *lblHeader =(UILabel*)[cell.contentView viewWithTag:1];
+    tag = tag+1;
+    UILabel *lblHeader =(UILabel*)[cell.contentView viewWithTag:tag];
     if(!lblHeader)
     {
         lblHeader = [[UILabel alloc]init];
@@ -147,37 +134,78 @@
         [lblHeader setFont:[UIFont fontWithName:@"Arial" size:14]];
         lblHeader.textColor=[UIColor brownColor];
         [cell.contentView addSubview:lblHeader];
+        lblHeader.tag = tag;
     }
-    lblHeader.frame=CGRectMake(45, 5, 200, 30);
+    lblHeader.frame=CGRectMake(45, yPosition, 200, 30);
     lblHeader.text = sts.userName == nil ? @"匿名" : sts.userName;
     
-    UILabel *lbl =(UILabel*)[cell.contentView viewWithTag:1];
+    yPosition=28;
+    tag = tag+1;
+    UILabel *lbl =(UILabel*)[cell.contentView viewWithTag:tag];
     if(!lbl)
     {
         lbl = [[UILabel alloc]init];
         lbl.backgroundColor=[UIColor clearColor];
         [lbl setFont:[UIFont fontWithName:@"Arial" size:14]];
-        lbl.tag = 1;
+        lbl.tag = tag;
         lbl.lineBreakMode= NSLineBreakByWordWrapping;
         lbl.numberOfLines = 10;
         [cell.contentView addSubview:lbl];
         [lbl release];
     }
-    lbl.frame=CGRectMake(20, yPosition, 280, fHeight);
+    float s= lblContentHeight;
+    lbl.frame=CGRectMake(20, yPosition, 280, s);
     lbl.text = sts.text;
     
+    tag = tag+1;
+    yPosition=yPosition+lblContentHeight;
+    if(sts.thumbnail_pic.length != 0)
+    {
+        UIImage* image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sts.thumbnail_pic]]];
+        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
+        if(!imageViewThumbnail)
+        {
+            imageViewThumbnail=[[UIImageView alloc]init];
+            [cell.contentView addSubview:imageViewThumbnail];
+            [imageViewThumbnail setTag:tag];
+            [imageViewThumbnail release];
+        }
+        imageViewThumbnail.image=image;
+        imageViewThumbnail.frame = CGRectMake((cell.frame.size.width-120)/2, yPosition, 120, 90);
+    }
+    else
+    {
+        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
+        imageViewThumbnail.frame=CGRectMake(0, 0, 0, 0);
+    }
     
-    yPosition=28+fHeight;
-    UIImageView* imageViewfoot = (UIImageView*)[cell.contentView viewWithTag:3];
+    yPosition=28;
+    tag = tag+1;
+    UIImageView* centerimage = (UIImageView*)[cell.contentView viewWithTag:tag];
+    if(!centerimage)
+    {
+        centerimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"block_center_background.png"]];
+        [cell.contentView addSubview:centerimage];
+        [centerimage setTag:tag];
+        centerimage.contentMode= UIViewContentModeScaleToFill;
+        [cell.contentView sendSubviewToBack:centerimage];
+        [centerimage release];
+    }
+    if(sts.thumbnail_pic.length!=0) lblContentHeight = lblContentHeight+90.f;
+    centerimage.frame = CGRectMake(0, 0, 320, lblContentHeight + yPosition);
+    
+    yPosition=centerimage.frame.origin.y + centerimage.frame.size.height;
+    tag = tag+1;
+    UIImageView* imageViewfoot = (UIImageView*)[cell.contentView viewWithTag:tag];
     if(!imageViewfoot)
     {
         imageViewfoot=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"block_foot_background.png"]];
         [cell.contentView addSubview:imageViewfoot];
-        [imageViewfoot setTag:3];
+        [imageViewfoot setTag:tag];
         [imageViewfoot release];
     }
     imageViewfoot.frame = CGRectMake(0, yPosition, 320, 15);
-    
+    cell.backgroundColor=[UIColor clearColor];
     return cell;
 }
 
@@ -192,7 +220,11 @@
     CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     
     float fHeight = size.height;
-    return fHeight+40;
+    if(sts.thumbnail_pic.length != 0)
+    {
+        fHeight=fHeight+90.f;
+    }
+    return fHeight+43;
 }
 
 -(void)dealloc

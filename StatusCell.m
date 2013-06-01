@@ -28,7 +28,6 @@
 }
 
 - (void)dealloc {
-    [_thumbnail_pic release];
     [_userName release];
     [_profile_image release];
     [_ContentView release];

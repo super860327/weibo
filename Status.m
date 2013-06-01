@@ -37,17 +37,19 @@
         self.createdAt=[self getTimeValueForKey:dic Key:@"created_at" defaultValue:0];
         self.text =[self getStringValueForKey:dic Key:@"text" defaultValue:@""];
         
-        NSString *thumb=[self getStringValueForKey:dic Key:@"thumbnail_pic" defaultValue:@""];
-        if(thumb)
-        {
-            //self.thumbnail_pic=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:thumb]]];
+       // self.thumbnail_pic =@"http://ww3.sinaimg.cn/thumbnail/4a4959d9jw1e58t6osdq9j218g0xc4ap.jpg";//[self getStringValueForKey:dic Key:@"thumbnail_pic" defaultValue:@""];
+        
+       self.thumbnail_pic =[self getStringValueForKey:dic Key:@"thumbnail_pic" defaultValue:@""];
+        
+        if ([self.thumbnail_pic length]!=0) {
+            NSLog(@"thumbnail_pic: %@",self.thumbnail_pic);
         }
         
         NSDictionary* userDic = [dic objectForKey:@"user"];
 		if (userDic)
         {
             self.userName=[self getStringValueForKey:userDic Key:@"name" defaultValue:@""];
-            NSString *image_url=[self getStringValueForKey:userDic Key:@"profile_image_url" defaultValue:@""];
+            //NSString *image_url=[self getStringValueForKey:userDic Key:@"profile_image_url" defaultValue:@""];
             //self.imageView = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:image_url]]];
         }
     }
