@@ -12,8 +12,7 @@
 
 @property (retain, nonatomic) IBOutlet UILabel *userName;
 @property (retain, nonatomic) IBOutlet UIImageView *profile_image;
-//@property (retain,nonatomic) IBOutlet UIImageView *thumbnail_pic;
 @property (retain, nonatomic) IBOutlet UITextView *ContentView;
 @property (retain, nonatomic) IBOutlet UILabel *textContent;
-@property (nonatomic,copy)  NSString* thumbnail_pic;
+@property (nonatomic,copy)  NSString* thumbnail_pic_url;
 @end

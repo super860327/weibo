@@ -159,9 +159,9 @@
     
     tag = tag+1;
     yPosition=yPosition+lblContentHeight;
-    if(sts.thumbnail_pic.length != 0)
+    if(sts.thumbnail_pic_url.length != 0)
     {
-        UIImage* image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sts.thumbnail_pic]]];
+        UIImage* image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sts.thumbnail_pic_url]]];
         UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
         if(!imageViewThumbnail)
         {
@@ -191,7 +191,7 @@
         [cell.contentView sendSubviewToBack:centerimage];
         [centerimage release];
     }
-    if(sts.thumbnail_pic.length!=0) lblContentHeight = lblContentHeight+90.f;
+    if(sts.thumbnail_pic_url.length!=0) lblContentHeight = lblContentHeight+90.f;
     centerimage.frame = CGRectMake(0, 0, 320, lblContentHeight + yPosition);
     
     yPosition=centerimage.frame.origin.y + centerimage.frame.size.height;
@@ -220,7 +220,7 @@
     CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     
     float fHeight = size.height;
-    if(sts.thumbnail_pic.length != 0)
+    if(sts.thumbnail_pic_url.length != 0)
     {
         fHeight=fHeight+90.f;
     }
