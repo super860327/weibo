@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF0510FF175E47A1002C7F1C /* ClassicPhotosDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF0510FE175E47A1002C7F1C /* ClassicPhotosDictionary.plist */; };
 		BF151B701750BD0000EEB9DE /* StatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF151B6F1750BD0000EEB9DE /* StatusCell.m */; };
 		BF151B741751182000EEB9DE /* block_center_background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF151B731751182000EEB9DE /* block_center_background.png */; };
 		BF151B7617511ABC00EEB9DE /* StatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF151B7517511ABC00EEB9DE /* StatusCell.xib */; };
@@ -76,6 +77,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF0510FE175E47A1002C7F1C /* ClassicPhotosDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ClassicPhotosDictionary.plist; sourceTree = "<group>"; };
 		BF151B6E1750BD0000EEB9DE /* StatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusCell.h; sourceTree = "<group>"; };
 		BF151B6F1750BD0000EEB9DE /* StatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusCell.m; sourceTree = "<group>"; };
 		BF151B731751182000EEB9DE /* block_center_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_center_background.png; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		BF8C1CD8173FDE4200F3181E = {
 			isa = PBXGroup;
 			children = (
+				BF0510FE175E47A1002C7F1C /* ClassicPhotosDictionary.plist */,
 				BF0DD135175A17C0008A2A5B /* Images */,
 				BF8D834C1753C54200C873D2 /* txt */,
 				BF8D834B17539DE100C873D2 /* WeiBoHttpManagerDelegate.h */,
@@ -226,7 +229,7 @@
 				BF2FE3DD174138A7003297B0 /* WeiBoHttpManager.h */,
 				BF2FE3DE174138A7003297B0 /* WeiBoHttpManager.m */,
 				BF59E93F17413149001C0F0A /* Constants.h */,
-				BF8C1D07173FE9AC00F3181E /* WeiboEngine */,
+				BF8C1D07173FE9AC00F3181E /* OpenSource */,
 				BF8C1D06173FDF7400F3181E /* ViewController */,
 				BF8C1CEA173FDE4200F3181E /* Weibo */,
 				BF8C1CE3173FDE4200F3181E /* Frameworks */,
@@ -295,16 +298,16 @@
 			name = ViewController;
 			sourceTree = "<group>";
 		};
-		BF8C1D07173FE9AC00F3181E /* WeiboEngine */ = {
+		BF8C1D07173FE9AC00F3181E /* OpenSource */ = {
 			isa = PBXGroup;
 			children = (
-				BF8C1D29173FEA3400F3181E /* SBJson */,
+				BF8C1D29173FEA3400F3181E /* Json */,
 				BF8C1D22173FEA1F00F3181E /* Additions */,
 				BF8C1D0A173FE9DC00F3181E /* ASIHttpRequest */,
 				BF8C1D08173FE9C400F3181E /* StringUtil.h */,
 				BF8C1D09173FE9C400F3181E /* StringUtil.m */,
 			);
-			name = WeiboEngine;
+			name = OpenSource;
 			sourceTree = "<group>";
 		};
 		BF8C1D0A173FE9DC00F3181E /* ASIHttpRequest */ = {
@@ -357,7 +360,7 @@
 			name = Additions;
 			sourceTree = "<group>";
 		};
-		BF8C1D29173FEA3400F3181E /* SBJson */ = {
+		BF8C1D29173FEA3400F3181E /* Json */ = {
 			isa = PBXGroup;
 			children = (
 				BF8C1D2A173FEA4000F3181E /* JSON.h */,
@@ -372,7 +375,7 @@
 				BF8C1D33173FEA4000F3181E /* SBJsonWriter.h */,
 				BF8C1D34173FEA4000F3181E /* SBJsonWriter.m */,
 			);
-			name = SBJson;
+			name = Json;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,6 +443,7 @@
 				BF897C4017519C38004D387A /* main_background.png in Resources */,
 				BF897C4217523400004D387A /* icon_tag.png in Resources */,
 				BF8D834D1753C54200C873D2 /* txt in Resources */,
+				BF0510FF175E47A1002C7F1C /* ClassicPhotosDictionary.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
