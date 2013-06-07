@@ -167,18 +167,15 @@
     yPosition=yPosition+lblContentHeight;
     if(sts.thumbnail_pic_url.length != 0)
     {
-        NSString *pic_url=[pendingImageQueue.pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
-        if (!pic_url) {
-            ImageRecord *record=[[ImageRecord alloc]initWithName:sts.thumbnail_pic_url url:sts.thumbnail_pic_url index:indexPath];
-            ImageDownload *load = [[ImageDownload alloc]initWithImageRecord:record delegate:self];
-            [pendingImageQueue.downloadQueue addOperation:load];
-            [record release];
-            [load release];
-        }
-        //--
-        if(![imageRecords objectForKey:sts.thumbnail_pic_url])
+        ImageRecord *record = [imageRecords objectForKey:sts.thumbnail_pic_url];
+        
+        if(record)
         {
-            UIImage* image= [imageRecords objectForKey:sts.thumbnail_pic_url];
+            UIImage* image= record.image;
+            
+            //            NSImageRep *rep = [[image representations] objectAtIndex:0];
+            //            NSSize imageSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
+            
             UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
             if(!imageViewThumbnail)
             {
@@ -187,26 +184,32 @@
                 [imageViewThumbnail setTag:tag];
                 [imageViewThumbnail release];
             }
-            imageViewThumbnail.image=image;
+            imageViewThumbnail.image = image;
+            CGFloat w = image.size.width;
+            CGFloat h = image.size.height;
+            imageViewThumbnail.frame = CGRectMake((cell.frame.size.width-w)/2, yPosition, w, h);
         }
-        //--
-        
-        //        UIImage* image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sts.thumbnail_pic_url]]];
-        //        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
-        //        if(!imageViewThumbnail)
-        //        {
-        //            imageViewThumbnail=[[UIImageView alloc]init];
-        //            [cell.contentView addSubview:imageViewThumbnail];
-        //            [imageViewThumbnail setTag:tag];
-        //            [imageViewThumbnail release];
-        //        }
-        //        imageViewThumbnail.image=image;
-        //        imageViewThumbnail.frame = CGRectMake((cell.frame.size.width-120)/2, yPosition, 120, 90);
+        else{
+            NSString *pic_url=[pendingImageQueue.pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
+            if (!pic_url) {
+                ImageRecord *record=[[ImageRecord alloc]initWithName:sts.thumbnail_pic_url url:sts.thumbnail_pic_url index:indexPath];
+                ImageDownload *load = [[ImageDownload alloc]initWithImageRecord:record delegate:self];
+                [pendingImageQueue.downloadQueue addOperation:load];
+                
+                [imageRecords setObject:record forKey:record.url];
+                
+                [record release];
+                [load release];
+            }
+        }
     }
     else
     {
-//        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
-//        imageViewThumbnail.frame=CGRectMake(0, 0, 0, 0);
+        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
+        if(imageViewThumbnail)
+        {
+            imageViewThumbnail.frame = CGRectMake(0, 0, 0, 0);
+        }
     }
     
     yPosition=28;
@@ -221,7 +224,15 @@
         [cell.contentView sendSubviewToBack:centerimage];
         [centerimage release];
     }
-    if(sts.thumbnail_pic_url.length!=0) lblContentHeight = lblContentHeight+90.f;
+    if(sts.thumbnail_pic_url.length!=0)
+    {
+        ImageRecord *record = [imageRecords objectForKey:sts.thumbnail_pic_url];
+        if(record.image)
+        {
+            lblContentHeight = lblContentHeight+record.image.size.height;
+        }
+        
+    }
     centerimage.frame = CGRectMake(0, 0, 320, lblContentHeight + yPosition);
     
     yPosition=centerimage.frame.origin.y + centerimage.frame.size.height;
@@ -252,31 +263,25 @@
     float fHeight = size.height;
     if(sts.thumbnail_pic_url.length != 0)
     {
-        fHeight=fHeight+90.f;
+        ImageRecord *record = [imageRecords objectForKey:sts.thumbnail_pic_url];
+        if(record && record.image)
+        {
+            fHeight=fHeight+record.image.size.height;
+        }
     }
     return fHeight+43;
 }
 
 -(void)ImageDownloadDidFinish:(ImageDownload *)download
 {
-    //download.imageRecord
-    
     UIImage* image= download.imageRecord.image;
-//    NSIndexPath *index=download.imageRecord.indexPath;
-//    @try {
-//        NSLog(@"%i",index.row);
-//    }
-//    @catch (NSException *exception) {
-//        NSLog(@"%@",exception.description);
-//    }
-//    
-//    
-//    
-//    NSInteger i = index.row;
-    [imageRecords setObject:image forKey:download.imageRecord.url];
-    
-      [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:download.imageRecord.indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-    
+    ImageRecord *record = [imageRecords objectForKey:download.imageRecord.url];
+    if(record)
+    {
+        record.image = image;
+        
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:download.imageRecord.indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 -(void)dealloc
