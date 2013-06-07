@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "WeiBoHttpManager.h"
+#import "PendingImageQueue.h"
+#import "ImageDownload.h"
 
-@interface TimelineViewController : UITableViewController<WeiBoHttpManagerDelegate>
+@interface TimelineViewController : UITableViewController<WeiBoHttpManagerDelegate,ImageDownloadComplete>
 {
     NSMutableArray *data;
     WeiBoHttpManager *httpManager;
+    NSMutableDictionary *imageRecords;
+    PendingImageQueue *pendingImageQueue;
 }
 @end

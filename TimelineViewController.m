@@ -13,6 +13,9 @@
 #import "Status.h"
 #import "StatusCell.h"
 #import "QuartzCore/QuartzCore.h"
+#import "PendingImageQueue.h"
+#import "ImageRecord.h"
+#import "ImageDownload.h"
 
 #define indentify @"Cell"
 
@@ -21,6 +24,7 @@
 @end
 
 @implementation TimelineViewController
+
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -37,6 +41,8 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
     httpManager=[[WeiBoHttpManager alloc]initWithDelegete:self];
+    imageRecords=[[NSMutableDictionary alloc]init];
+    pendingImageQueue=[[PendingImageQueue alloc]init];
     [httpManager start];
     
     self.title =@"Super";
@@ -122,7 +128,7 @@
         avatarimage.contentMode= UIViewContentModeScaleToFill;
         [avatarimage release];
     }
-    avatarimage.image=[UIImage imageNamed:@"Icon.png"];
+    //avatarimage.image=[UIImage imageNamed:@"Icon.png"];
     avatarimage.frame = CGRectMake(15, yPosition, 24, 24);
     
     tag = tag+1;
@@ -161,22 +167,46 @@
     yPosition=yPosition+lblContentHeight;
     if(sts.thumbnail_pic_url.length != 0)
     {
-        UIImage* image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sts.thumbnail_pic_url]]];
-        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
-        if(!imageViewThumbnail)
-        {
-            imageViewThumbnail=[[UIImageView alloc]init];
-            [cell.contentView addSubview:imageViewThumbnail];
-            [imageViewThumbnail setTag:tag];
-            [imageViewThumbnail release];
+        NSString *pic_url=[pendingImageQueue.pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
+        if (!pic_url) {
+            ImageRecord *record=[[ImageRecord alloc]initWithName:sts.thumbnail_pic_url url:sts.thumbnail_pic_url index:indexPath];
+            ImageDownload *load = [[ImageDownload alloc]initWithImageRecord:record delegate:self];
+            [pendingImageQueue.downloadQueue addOperation:load];
+            [record release];
+            [load release];
         }
-        imageViewThumbnail.image=image;
-        imageViewThumbnail.frame = CGRectMake((cell.frame.size.width-120)/2, yPosition, 120, 90);
+        //--
+        if(![imageRecords objectForKey:sts.thumbnail_pic_url])
+        {
+            UIImage* image= [imageRecords objectForKey:sts.thumbnail_pic_url];
+            UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
+            if(!imageViewThumbnail)
+            {
+                imageViewThumbnail=[[UIImageView alloc]init];
+                [cell.contentView addSubview:imageViewThumbnail];
+                [imageViewThumbnail setTag:tag];
+                [imageViewThumbnail release];
+            }
+            imageViewThumbnail.image=image;
+        }
+        //--
+        
+        //        UIImage* image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sts.thumbnail_pic_url]]];
+        //        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
+        //        if(!imageViewThumbnail)
+        //        {
+        //            imageViewThumbnail=[[UIImageView alloc]init];
+        //            [cell.contentView addSubview:imageViewThumbnail];
+        //            [imageViewThumbnail setTag:tag];
+        //            [imageViewThumbnail release];
+        //        }
+        //        imageViewThumbnail.image=image;
+        //        imageViewThumbnail.frame = CGRectMake((cell.frame.size.width-120)/2, yPosition, 120, 90);
     }
     else
     {
-        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
-        imageViewThumbnail.frame=CGRectMake(0, 0, 0, 0);
+//        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
+//        imageViewThumbnail.frame=CGRectMake(0, 0, 0, 0);
     }
     
     yPosition=28;
@@ -225,6 +255,28 @@
         fHeight=fHeight+90.f;
     }
     return fHeight+43;
+}
+
+-(void)ImageDownloadDidFinish:(ImageDownload *)download
+{
+    //download.imageRecord
+    
+    UIImage* image= download.imageRecord.image;
+//    NSIndexPath *index=download.imageRecord.indexPath;
+//    @try {
+//        NSLog(@"%i",index.row);
+//    }
+//    @catch (NSException *exception) {
+//        NSLog(@"%@",exception.description);
+//    }
+//    
+//    
+//    
+//    NSInteger i = index.row;
+    [imageRecords setObject:image forKey:download.imageRecord.url];
+    
+      [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:download.imageRecord.indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+    
 }
 
 -(void)dealloc
