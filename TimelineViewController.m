@@ -25,8 +25,6 @@
 
 @implementation TimelineViewController
 
-
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -100,7 +98,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat yPosition =0.0f;
+    NSInteger tag = 0;
     
     Status *sts= [data objectAtIndex:indexPath.row];
     StatusCell  *cell = [tableView dequeueReusableCellWithIdentifier:indentify];
@@ -108,30 +106,21 @@
     {
         cell = [[StatusCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentify];
     }
-    cell.selectionStyle= UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    float fPadding = 16.0; // 8.0px x 2
-    CGSize constraint = CGSizeMake(280 - fPadding, CGFLOAT_MAX);
-    UIFont *cellFont =  [UIFont systemFontOfSize:14.0];
-    CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    float lblContentHeight = size.height;
-    
-    yPosition=5;
-    int tag=1;
-    UIImageView* avatarimage = (UIImageView*)[cell.contentView viewWithTag:tag];
-    if(!avatarimage)
-    {
-        avatarimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Icon.png"]];
-        avatarimage.contentMode = UIViewContentModeScaleToFill;
-        [cell.contentView addSubview:avatarimage];
-        [avatarimage setTag:tag];
-        avatarimage.contentMode= UIViewContentModeScaleToFill;
-        [avatarimage release];
-    }
-    //avatarimage.image=[UIImage imageNamed:@"Icon.png"];
-    avatarimage.frame = CGRectMake(15, yPosition, 24, 24);
-    
-    tag = tag+1;
+	[self setupAvatarImage :cell status:sts theTag:++tag thePosition:CGPointMake(15, 5) ];
+    [self setupUserName:cell status:sts theTag:++tag thePosition:CGPointMake(45, 5)];
+    CGFloat textHeight = [self setupTwitterText:cell status:sts theTag:++tag thePosition:CGPointMake(20, 28)];
+    CGFloat imageHeight = [self setupTwitterImage:cell :indexPath :sts :++tag :CGPointMake(20, textHeight + 28)];
+    [self setupCellBackgroundImage:cell :28 + imageHeight + textHeight :sts :++tag :CGPointMake(0, 0) ];
+	[self setupCellFooterImage:cell :++tag :CGPointMake(0, 28 + imageHeight + textHeight)];
+	
+    cell.backgroundColor=[UIColor clearColor];
+    return cell;
+}
+
+-(void)setupUserName:(UITableViewCell*)cell status:(Status*)sts theTag:(NSInteger) tag thePosition:(CGPoint) position
+{
     UILabel *lblHeader =(UILabel*)[cell.contentView viewWithTag:tag];
     if(!lblHeader)
     {
@@ -142,12 +131,28 @@
         [cell.contentView addSubview:lblHeader];
         lblHeader.tag = tag;
     }
-    lblHeader.frame=CGRectMake(45, yPosition, 200, 30);
-    lblHeader.text = sts.userName == nil ? @"匿名" : sts.userName;
-    
-    yPosition=28;
-    tag = tag+1;
-    UILabel *lbl =(UILabel*)[cell.contentView viewWithTag:tag];
+    lblHeader.frame=CGRectMake(position.x, position.y, 200, 30);
+    lblHeader.text = sts.userName.length == 0 ? @"匿名" : sts.userName;
+}
+
+-(void)setupAvatarImage:(UITableViewCell*)cell status:(Status*)sts theTag:(NSInteger) tag thePosition:( CGPoint) position
+{
+	UIImageView* avatarimage = (UIImageView*)[cell.contentView viewWithTag:tag];
+    if(!avatarimage)
+    {
+        avatarimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Icon.png"]];
+        avatarimage.contentMode = UIViewContentModeScaleToFill;
+        [cell.contentView addSubview:avatarimage];
+        [avatarimage setTag:tag];
+        avatarimage.contentMode= UIViewContentModeScaleToFill;
+        [avatarimage release];
+    }
+    avatarimage.frame = CGRectMake(position.x, position.y, 24, 24);
+}
+
+-(CGFloat)setupTwitterText:(UITableViewCell*)cell status:(Status *)sts theTag:(NSInteger)tag thePosition:(CGPoint)position
+{
+	UILabel *lbl =(UILabel*)[cell.contentView viewWithTag:tag];
     if(!lbl)
     {
         lbl = [[UILabel alloc]init];
@@ -159,24 +164,34 @@
         [cell.contentView addSubview:lbl];
         [lbl release];
     }
-    float s= lblContentHeight;
-    lbl.frame=CGRectMake(20, yPosition, 280, s);
+	float fPadding = 16.0; // 8.0px x 2
+    CGSize constraint = CGSizeMake(280 - fPadding, CGFLOAT_MAX);
+    UIFont *cellFont =  [UIFont systemFontOfSize:14.0];
+    CGSize size = [sts.text sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    lbl.frame=CGRectMake(position.x, position.y, 280, size.height);
     lbl.text = sts.text;
-    
-    tag = tag+1;
-    yPosition=yPosition+lblContentHeight;
-    if(sts.thumbnail_pic_url.length != 0)
+	return size.height;
+}
+
+-(CGFloat)setupTwitterImage:(UITableViewCell*)cell :(NSIndexPath*)indexPath :(Status *)sts :(NSInteger) tag :(CGPoint) position
+{
+    CGFloat height =0;
+	if(sts.thumbnail_pic_url.length == 0)
+    {
+	    UIImageView *imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
+        if(imageViewThumbnail)
+        {
+		    imageViewThumbnail.hidden = YES;
+            imageViewThumbnail.frame = CGRectMake(0,0,0,0);
+        }
+    }
+    else
     {
         ImageRecord *record = [imageRecords objectForKey:sts.thumbnail_pic_url];
-        
-        if(record)
+        if(record && record.image)
         {
             UIImage* image= record.image;
-            
-            //            NSImageRep *rep = [[image representations] objectAtIndex:0];
-            //            NSSize imageSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
-            
-            UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
+            UIImageView *imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
             if(!imageViewThumbnail)
             {
                 imageViewThumbnail=[[UIImageView alloc]init];
@@ -184,37 +199,32 @@
                 [imageViewThumbnail setTag:tag];
                 [imageViewThumbnail release];
             }
+            imageViewThumbnail.hidden = NO;
             imageViewThumbnail.image = image;
             CGFloat w = image.size.width;
-            CGFloat h = image.size.height;
-            imageViewThumbnail.frame = CGRectMake((cell.frame.size.width-w)/2, yPosition, w, h);
+            height = image.size.height;
+            imageViewThumbnail.frame = CGRectMake((cell.frame.size.width-w)/2, position.y, w, height);//do some fix
         }
-        else{
+        else
+		{
             NSString *pic_url=[pendingImageQueue.pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
-            if (!pic_url) {
+            if (!pic_url)
+			{
                 ImageRecord *record=[[ImageRecord alloc]initWithName:sts.thumbnail_pic_url url:sts.thumbnail_pic_url index:indexPath];
                 ImageDownload *load = [[ImageDownload alloc]initWithImageRecord:record delegate:self];
                 [pendingImageQueue.downloadQueue addOperation:load];
-                
                 [imageRecords setObject:record forKey:record.url];
-                
                 [record release];
                 [load release];
             }
         }
     }
-    else
-    {
-        UIImageView* imageViewThumbnail = (UIImageView*)[cell.contentView viewWithTag:tag];
-        if(imageViewThumbnail)
-        {
-            imageViewThumbnail.frame = CGRectMake(0, 0, 0, 0);
-        }
-    }
-    
-    yPosition=28;
-    tag = tag+1;
-    UIImageView* centerimage = (UIImageView*)[cell.contentView viewWithTag:tag];
+    return height;
+}
+
+-(CGFloat)setupCellBackgroundImage:(UITableViewCell*)cell :(CGFloat)lblContentHeight :(Status *)sts :(NSInteger) tag :(CGPoint) position
+{
+	UIImageView* centerimage = (UIImageView*)[cell.contentView viewWithTag:tag];
     if(!centerimage)
     {
         centerimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"block_center_background.png"]];
@@ -229,15 +239,17 @@
         ImageRecord *record = [imageRecords objectForKey:sts.thumbnail_pic_url];
         if(record.image)
         {
-            lblContentHeight = lblContentHeight+record.image.size.height;
+            lblContentHeight = lblContentHeight;
         }
-        
     }
-    centerimage.frame = CGRectMake(0, 0, 320, lblContentHeight + yPosition);
-    
-    yPosition=centerimage.frame.origin.y + centerimage.frame.size.height;
-    tag = tag+1;
-    UIImageView* imageViewfoot = (UIImageView*)[cell.contentView viewWithTag:tag];
+    centerimage.frame = CGRectMake(0, 0, 320, lblContentHeight + position.y);
+    return lblContentHeight;
+}
+
+-(CGFloat)setupCellFooterImage:(UITableViewCell*)cell :(NSInteger) tag :(CGPoint) position
+{
+    CGFloat height = 15;
+	UIImageView* imageViewfoot = (UIImageView*)[cell.contentView viewWithTag:tag];
     if(!imageViewfoot)
     {
         imageViewfoot=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"block_foot_background.png"]];
@@ -245,9 +257,8 @@
         [imageViewfoot setTag:tag];
         [imageViewfoot release];
     }
-    imageViewfoot.frame = CGRectMake(0, yPosition, 320, 15);
-    cell.backgroundColor=[UIColor clearColor];
-    return cell;
+    imageViewfoot.frame = CGRectMake(position.x, position.y, 320, height);
+	return height;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -269,7 +280,7 @@
             fHeight=fHeight+record.image.size.height;
         }
     }
-    return fHeight+43;
+    return fHeight + 28 + 15;
 }
 
 -(void)ImageDownloadDidFinish:(ImageDownload *)download
@@ -279,7 +290,6 @@
     if(record)
     {
         record.image = image;
-        
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:download.imageRecord.indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
@@ -292,3 +302,4 @@
 }
 
 @end
+

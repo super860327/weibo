@@ -10,6 +10,7 @@
 #import "WeiBoHttpManager.h"
 #import "PendingImageQueue.h"
 #import "ImageDownload.h"
+#import "Status.h"
 
 @interface TimelineViewController : UITableViewController<WeiBoHttpManagerDelegate,ImageDownloadComplete>
 {
