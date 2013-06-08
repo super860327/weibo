@@ -17,6 +17,8 @@
 @synthesize userName=_userName;
 @synthesize imageView=_imageView;
 @synthesize thumbnail_pic_url=_thumbnail_pic;
+@synthesize retwitterText=_retwitterText;
+@synthesize retwitterThumbnail_pic_url=_retwitterThumbnail_pic_url;
 
 -(id)init
 {
@@ -43,8 +45,13 @@
 		if (userDic)
         {
             self.userName = [self getStringValueForKey:userDic Key:@"name" defaultValue:@""];
-            //NSString *image_url=[self getStringValueForKey:userDic Key:@"profile_image_url" defaultValue:@""];
-            //self.imageView = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:image_url]]];
+        }
+        NSDictionary *reTwitter = [dic objectForKey:@"retweeted_status"];
+        if(reTwitter)
+        {
+            self.retwitterText = [self getStringValueForKey:reTwitter Key:@"text" defaultValue:@""];
+            self.retwitterThumbnail_pic_url=[self getStringValueForKey:reTwitter Key:@"thumbnail_pic" defaultValue:@""];
+            if(self.retwitterThumbnail_pic_url)NSLog(@"url:%@",self.retwitterThumbnail_pic_url);
         }
     }
     return self;

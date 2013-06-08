@@ -112,8 +112,10 @@
     [self setupUserName:cell status:sts theTag:++tag thePosition:CGPointMake(45, 5)];
     CGFloat textHeight = [self setupTwitterText:cell status:sts theTag:++tag thePosition:CGPointMake(20, 28)];
     CGFloat imageHeight = [self setupTwitterImage:cell :indexPath :sts :++tag :CGPointMake(20, textHeight + 28)];
-    [self setupCellBackgroundImage:cell :28 + imageHeight + textHeight :sts :++tag :CGPointMake(0, 0) ];
-	[self setupCellFooterImage:cell :++tag :CGPointMake(0, 28 + imageHeight + textHeight)];
+    CGFloat imageRetwiter = [self setupReTwitterImage:cell :indexPath:sts :++tag :CGPointMake(0, 28 + imageHeight + textHeight)];
+    CGFloat imageRetwiterText =[self setupReTwitterText:cell status:sts theTag:++tag thePosition:CGPointMake(20, 28 + imageHeight + textHeight+imageRetwiter)];
+    [self setupCellBackgroundImage:cell :28 + imageHeight + textHeight+imageRetwiter+imageRetwiterText :sts :++tag :CGPointMake(0, 0) ];
+	[self setupCellFooterImage:cell :++tag :CGPointMake(0, 28 + imageHeight + textHeight+imageRetwiter+imageRetwiterText)];
 	
     cell.backgroundColor=[UIColor clearColor];
     return cell;
@@ -222,6 +224,75 @@
     return height;
 }
 
+-(CGFloat)setupReTwitterImage:(UITableViewCell*)cell :(NSIndexPath*)indexPath :(Status *)sts :(NSInteger) tag :(CGPoint) position
+{
+    CGFloat height =15;
+	if(sts.retwitterText == nil || sts.retwitterText.length == 0)
+    {
+	    UIImageView *imageViewReTwitter = (UIImageView*)[cell.contentView viewWithTag:tag];
+        if(imageViewReTwitter)
+        {
+		    imageViewReTwitter.hidden = YES;
+            imageViewReTwitter.frame = CGRectMake(0,0,0,0);
+            
+        }
+        height = 0;
+    }
+    else
+    {
+        UIImageView *imageViewReTwitter = (UIImageView*)[cell.contentView viewWithTag:tag];
+        
+        if(!imageViewReTwitter)
+        {
+            imageViewReTwitter = [[UIImageView alloc]init];
+            imageViewReTwitter.image=[UIImage imageNamed:@"timeline_rt_border_t.png"];
+            imageViewReTwitter.tag = tag;
+            [cell.contentView addSubview:imageViewReTwitter];
+        }
+        imageViewReTwitter.frame=CGRectMake(position.x, position.y, 280, height);
+        imageViewReTwitter.hidden = NO;
+    }
+    
+    return height;
+}
+
+-(CGFloat)setupReTwitterText:(UITableViewCell*)cell status:(Status *)sts theTag:(NSInteger)tag thePosition:(CGPoint)position
+{
+    CGFloat height = 0;
+    if(sts.retwitterText)
+    {
+        UILabel *lbl =(UILabel*)[cell.contentView viewWithTag:tag];
+        if(!lbl)
+        {
+            lbl = [[UILabel alloc]init];
+            lbl.backgroundColor=[UIColor clearColor];
+            [lbl setFont:[UIFont fontWithName:@"Arial" size:14]];
+            lbl.tag = tag;
+            lbl.lineBreakMode= NSLineBreakByWordWrapping;
+            lbl.numberOfLines = 10;
+            [cell.contentView addSubview:lbl];
+            [lbl release];
+        }
+        float fPadding = 16.0; // 8.0px x 2
+        CGSize constraint = CGSizeMake(280 - fPadding, CGFLOAT_MAX);
+        UIFont *cellFont =  [UIFont systemFontOfSize:14.0];
+        CGSize size = [sts.retwitterText sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        lbl.frame=CGRectMake(position.x, position.y, 280, size.height);
+        lbl.text = sts.retwitterText;
+        height=size.height;
+    }
+    else
+    {
+        UILabel *lbl =(UILabel*)[cell.contentView viewWithTag:tag];
+        if(lbl)
+        {
+            lbl.frame=CGRectMake(position.x, position.y, 0, 0);
+            lbl.text =@"";
+        }
+    }
+	return height;
+}
+
 -(CGFloat)setupCellBackgroundImage:(UITableViewCell*)cell :(CGFloat)lblContentHeight :(Status *)sts :(NSInteger) tag :(CGPoint) position
 {
 	UIImageView* centerimage = (UIImageView*)[cell.contentView viewWithTag:tag];
@@ -245,6 +316,7 @@
     centerimage.frame = CGRectMake(0, 0, 320, lblContentHeight + position.y);
     return lblContentHeight;
 }
+
 
 -(CGFloat)setupCellFooterImage:(UITableViewCell*)cell :(NSInteger) tag :(CGPoint) position
 {
@@ -279,6 +351,12 @@
         {
             fHeight=fHeight+record.image.size.height;
         }
+    }
+    if(sts.retwitterText.length != 0)
+    {
+        fHeight=fHeight+15;
+        size = [sts.retwitterText sizeWithFont:cellFont  constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        fHeight = fHeight + size.height;
     }
     return fHeight + 28 + 15;
 }

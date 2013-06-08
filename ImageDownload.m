@@ -18,7 +18,7 @@
     if(self=[super init])
     {
         self.imageRecord = record;
-        NSLog(@"1. %@",self.imageRecord.indexPath);
+        //NSLog(@"1. %@",self.imageRecord.indexPath);
         self.delegate = theDelegate;
     }
     return self;

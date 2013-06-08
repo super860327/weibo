@@ -16,7 +16,10 @@
 @property (nonatomic,copy)NSString *text;
 @property (nonatomic,copy) NSString *userName;
 @property (nonatomic,copy) UIImage *imageView;
-@property (nonatomic,copy) NSString* thumbnail_pic_url;
+@property (nonatomic,copy) NSString *thumbnail_pic_url;
+
+@property (nonatomic,copy)NSString *retwitterText;
+@property (nonatomic,copy) NSString *retwitterThumbnail_pic_url;
 
 -(Status*)initWithJSONDictionary:(NSDictionary *)dic;
 
