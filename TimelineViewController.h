@@ -16,7 +16,5 @@
 {
     NSMutableArray *data;
     WeiBoHttpManager *httpManager;
-    NSMutableDictionary *imageRecords;
-    PendingImageQueue *pendingImageQueue;
 }
 @end

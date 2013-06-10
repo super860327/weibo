@@ -18,7 +18,6 @@
     if(self=[super init])
     {
         self.imageRecord = record;
-        //NSLog(@"1. %@",self.imageRecord.indexPath);
         self.delegate = theDelegate;
     }
     return self;
@@ -34,7 +33,7 @@
     self.imageRecord.image = [UIImage imageWithData:data];
     
     if(self.isCancelled)return;
-   
+    
     [(NSObject*)self.delegate performSelectorOnMainThread:@selector(ImageDownloadDidFinish:) withObject:self waitUntilDone:YES];
     
 }

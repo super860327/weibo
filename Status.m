@@ -51,7 +51,7 @@
         {
             self.retwitterText = [self getStringValueForKey:reTwitter Key:@"text" defaultValue:@""];
             self.retwitterThumbnail_pic_url=[self getStringValueForKey:reTwitter Key:@"thumbnail_pic" defaultValue:@""];
-            if(self.retwitterThumbnail_pic_url)NSLog(@"url:%@",self.retwitterThumbnail_pic_url);
+            //if(self.retwitterThumbnail_pic_url)NSLog(@"url:%@",self.retwitterThumbnail_pic_url);
         }
     }
     return self;

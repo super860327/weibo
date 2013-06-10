@@ -13,4 +13,6 @@
 @property (nonatomic,retain)NSMutableDictionary *pendingdownloadimages;
 @property (nonatomic,retain)NSOperationQueue *downloadQueue;
 
++(PendingImageQueue*)instance;
+
 @end
