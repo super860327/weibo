@@ -7,19 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ImageRecord.h"
+#import "ImageRecorder.h"
+
 @protocol ImageDownloadComplete;
 
-@interface ImageDownload : NSOperation
+@interface ImageDownloader : NSOperation
 
-@property(nonatomic,strong)ImageRecord *imageRecord;
+@property(nonatomic,strong)ImageRecorder *imageRecord;
 @property(nonatomic,assign)id<ImageDownloadComplete> delegate;
 
--(id)initWithImageRecord:(ImageRecord*)record delegate:(id<ImageDownloadComplete>) theDelegate;
+-(id)initWithImageRecord:(ImageRecorder*)record delegate:(id<ImageDownloadComplete>) theDelegate;
 
 @end
 
 @protocol ImageDownloadComplete <NSObject>
 
--(void)ImageDownloadDidFinish:(ImageDownload*)download;
+-(void)ImageDownloadDidFinish:(ImageDownloader*)download;
 @end
+

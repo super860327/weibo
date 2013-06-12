@@ -30,17 +30,19 @@ static PendingImageQueue *_instance = nil;
     }
     return _instance;
 }
+
 -(id)retain
 {
     return self;
 }
+
 -(id)autorelease
 {
     return self;
 }
+
 -(oneway void)release
 {
-    
 }
 
 -(NSOperationQueue*)downloadQueue
@@ -63,7 +65,7 @@ static PendingImageQueue *_instance = nil;
 
 -(void)dealloc
 {
-    self.downloadQueue=nil;
+    self.downloadQueue = nil;
     self.pendingdownloadimages = nil;
     [super dealloc];
 }

@@ -18,8 +18,8 @@
 		BF30E9D5174D001A00034FD9 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = BF30E9D4174D001A00034FD9 /* Status.m */; };
 		BF3D9C76175127A2001F4F5D /* thumb_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D9C75175127A2001F4F5D /* thumb_avatar.png */; };
 		BF3D9C781751295C001F4F5D /* block_foot_background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D9C771751295C001F4F5D /* block_foot_background.png */; };
-		BF3F1FD11760C022004413D9 /* ImageRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3F1FD01760C022004413D9 /* ImageRecord.m */; };
-		BF3F1FD41760C3C8004413D9 /* ImageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3F1FD31760C3C8004413D9 /* ImageDownload.m */; };
+		BF3F1FD11760C022004413D9 /* ImageRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3F1FD01760C022004413D9 /* ImageRecorder.m */; };
+		BF3F1FD41760C3C8004413D9 /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3F1FD31760C3C8004413D9 /* ImageDownloader.m */; };
 		BF3F1FD71760CBAE004413D9 /* PendingImageQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3F1FD61760CBAE004413D9 /* PendingImageQueue.m */; };
 		BF59E9431741336C001C0F0A /* OAuthWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59E9411741336C001C0F0A /* OAuthWebViewController.m */; };
 		BF59E9441741336C001C0F0A /* OAuthWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF59E9421741336C001C0F0A /* OAuthWebViewController.xib */; };
@@ -95,10 +95,10 @@
 		BF30E9D4174D001A00034FD9 /* Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Status.m; sourceTree = "<group>"; };
 		BF3D9C75175127A2001F4F5D /* thumb_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb_avatar.png; sourceTree = "<group>"; };
 		BF3D9C771751295C001F4F5D /* block_foot_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_foot_background.png; sourceTree = "<group>"; };
-		BF3F1FCF1760C022004413D9 /* ImageRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageRecord.h; sourceTree = "<group>"; };
-		BF3F1FD01760C022004413D9 /* ImageRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageRecord.m; sourceTree = "<group>"; };
-		BF3F1FD21760C3C8004413D9 /* ImageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownload.h; sourceTree = "<group>"; };
-		BF3F1FD31760C3C8004413D9 /* ImageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownload.m; sourceTree = "<group>"; };
+		BF3F1FCF1760C022004413D9 /* ImageRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageRecorder.h; sourceTree = "<group>"; };
+		BF3F1FD01760C022004413D9 /* ImageRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageRecorder.m; sourceTree = "<group>"; };
+		BF3F1FD21760C3C8004413D9 /* ImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
+		BF3F1FD31760C3C8004413D9 /* ImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
 		BF3F1FD51760CBAE004413D9 /* PendingImageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingImageQueue.h; sourceTree = "<group>"; };
 		BF3F1FD61760CBAE004413D9 /* PendingImageQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingImageQueue.m; sourceTree = "<group>"; };
 		BF59E93F17413149001C0F0A /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -228,10 +228,10 @@
 		BF3F1FCE1760BF6F004413D9 /* ImageLoader */ = {
 			isa = PBXGroup;
 			children = (
-				BF3F1FCF1760C022004413D9 /* ImageRecord.h */,
-				BF3F1FD01760C022004413D9 /* ImageRecord.m */,
-				BF3F1FD21760C3C8004413D9 /* ImageDownload.h */,
-				BF3F1FD31760C3C8004413D9 /* ImageDownload.m */,
+				BF3F1FCF1760C022004413D9 /* ImageRecorder.h */,
+				BF3F1FD01760C022004413D9 /* ImageRecorder.m */,
+				BF3F1FD21760C3C8004413D9 /* ImageDownloader.h */,
+				BF3F1FD31760C3C8004413D9 /* ImageDownloader.m */,
 				BF3F1FD51760CBAE004413D9 /* PendingImageQueue.h */,
 				BF3F1FD61760CBAE004413D9 /* PendingImageQueue.m */,
 			);
@@ -517,8 +517,8 @@
 				BF2FE3DF174138A7003297B0 /* WeiBoHttpManager.m in Sources */,
 				BF30E9D5174D001A00034FD9 /* Status.m in Sources */,
 				BF151B701750BD0000EEB9DE /* StatusCell.m in Sources */,
-				BF3F1FD11760C022004413D9 /* ImageRecord.m in Sources */,
-				BF3F1FD41760C3C8004413D9 /* ImageDownload.m in Sources */,
+				BF3F1FD11760C022004413D9 /* ImageRecorder.m in Sources */,
+				BF3F1FD41760C3C8004413D9 /* ImageDownloader.m in Sources */,
 				BF3F1FD71760CBAE004413D9 /* PendingImageQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

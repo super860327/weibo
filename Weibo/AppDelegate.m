@@ -24,7 +24,7 @@
     // Override point for customization after application launch.
     
     TimelineViewController *viewController=[[TimelineViewController alloc]init];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:viewController];
+    nav = [[UINavigationController alloc]initWithRootViewController:viewController];
     [viewController release];
     
 //    self.tabBarController =[[UITabBarController alloc]init];

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PendingImageQueue : NSOperation
+@interface PendingImageQueue : NSObject
 
 @property (nonatomic,retain)NSMutableDictionary *pendingdownloadimages;
 @property (nonatomic,retain)NSOperationQueue *downloadQueue;

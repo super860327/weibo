@@ -6,15 +6,13 @@
 //  Copyright (c) 2013年 super. All rights reserved.
 //
 
+#import "QuartzCore/QuartzCore.h"
 #import "TimelineViewController.h"
 #import "Constants.h"
 #import "OAuthWebViewController.h"
-#import "WeiBoHttpManager.h"
-#import "Status.h"
 #import "StatusCell.h"
-#import "QuartzCore/QuartzCore.h"
-#import "ImageRecord.h"
-#import "ImageDownload.h"
+#import "ImageRecorder.h"
+
 
 #define indentify @"Cell"
 
@@ -105,6 +103,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //NSLog(@"%i",indexPath.row);
     Status *sts= [data objectAtIndex:indexPath.row];
     
     float fPadding = 16.0; // 8.0px x 2
@@ -117,12 +116,22 @@
     if(sts.thumbnail_pic_url.length != 0)
     {
         
-        ImageRecord *record = [[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
+        ImageRecorder *record = [[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
         if(record && record.image)
         {
             fHeight=fHeight+record.image.size.height;
         }
     }
+    if(sts.retwitterThumbnail_pic_url.length != 0)
+    {
+        
+        ImageRecorder *record = [[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.retwitterThumbnail_pic_url];
+        if(record && record.image)
+        {
+            fHeight=fHeight+record.image.size.height;
+        }
+    }
+    
     if(sts.retwitterText.length != 0)
     {
         fHeight = fHeight + 15;
@@ -132,14 +141,18 @@
     return fHeight + 28 + 15;
 }
 
--(void)ImageDownloadDidFinish:(ImageDownload *)download
+-(void)ImageDownloadDidFinish:(ImageDownloader *)download
 {
-    UIImage* image= download.imageRecord.image;
-    ImageRecord *record = [[PendingImageQueue instance].pendingdownloadimages objectForKey:download.imageRecord.url];
+    //UIImage* image= download.imageRecord.image;
+    ImageRecorder *record = [[PendingImageQueue instance].pendingdownloadimages objectForKey:download.imageRecord.url];
     if(record)
     {
-        record.image = image;
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:download.imageRecord.indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+        NSLog(@"%@",record == download.imageRecord? @"YES":@"NO");
+        //NSLog(@"%@",record.url);
+//        NSLog(@"%@",record.indexPath);
+//        NSLog(@"%i",record.indexPath.row);
+        //record.image = image;
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:record.indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

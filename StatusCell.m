@@ -7,8 +7,6 @@
 //
 
 #import "StatusCell.h"
-#import "PendingImageQueue.h"
-#import "ImageDownload.h"
 
 @implementation StatusCell
 
@@ -42,16 +40,18 @@
     height = [self setupTwitterImage :indexPath :sts :++tag :CGPointMake(20, nextPositionY)];
 	
 	nextPositionY += height;
-    height = [self setupReTwitterImage:indexPath :sts :++tag :CGPointMake(0, nextPositionY)];
+    height = [self setupReTwitterHeader:indexPath :sts :++tag :CGPointMake(0, nextPositionY)];
 	
 	nextPositionY += height;
     height =[self setupReTwitterText:sts theTag:++tag thePosition:CGPointMake(20, nextPositionY)];
 	
+    nextPositionY += height;
+    height = [self setupReTwitterImage:indexPath :sts :++tag :CGPointMake(0, nextPositionY)];
+    
 	nextPositionY += height;
-    [self setupCellBackgroundImage :nextPositionY :sts :++tag :CGPointMake(0, 0) ];
+    [self setupCellBackgroundImage:sts :++tag :CGPointMake(0, nextPositionY) ];
 	
 	[self setupCellFooterImage :++tag :CGPointMake(0, nextPositionY)];
-    
 }
 
 -(void)setupUserName:(Status*)sts theTag:(NSInteger) tag thePosition:(CGPoint) position
@@ -63,10 +63,10 @@
         lblHeader.backgroundColor=[UIColor clearColor];
         [lblHeader setFont:[UIFont fontWithName:@"Arial" size:14]];
         lblHeader.textColor=[UIColor brownColor];
+        lblHeader.frame=CGRectMake(position.x, position.y, 200, 30);
         [self.contentView addSubview:lblHeader];
         lblHeader.tag = tag;
     }
-    lblHeader.frame=CGRectMake(position.x, position.y, 200, 30);
     lblHeader.text = sts.userName.length == 0 ? @"匿名" : sts.userName;
 }
 
@@ -77,12 +77,12 @@
     {
         avatarimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Icon.png"]];
         avatarimage.contentMode = UIViewContentModeScaleToFill;
+        avatarimage.frame = CGRectMake(position.x, position.y, 24, 24);
         [self.contentView addSubview:avatarimage];
         [avatarimage setTag:tag];
         avatarimage.contentMode= UIViewContentModeScaleToFill;
         [avatarimage release];
     }
-    avatarimage.frame = CGRectMake(position.x, position.y, 24, 24);
 }
 
 -(CGFloat)setupTwitterText:(Status *)sts theTag:(NSInteger)tag thePosition:(CGPoint)position
@@ -122,7 +122,90 @@
     }
     else
     {
-        ImageRecord *record = [[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
+        ImageRecorder *record = [[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
+        if(record)
+        {
+            if (record.image)
+            {
+                UIImage* image= record.image;
+                UIImageView *imageViewThumbnail = (UIImageView*)[self.contentView viewWithTag:tag];
+                if(!imageViewThumbnail)
+                {
+                    imageViewThumbnail=[[UIImageView alloc]init];
+                    [self.contentView addSubview:imageViewThumbnail];
+                    [imageViewThumbnail setTag:tag];
+                    [imageViewThumbnail release];
+                }
+                imageViewThumbnail.hidden = NO;
+                imageViewThumbnail.image = image;
+                height = image.size.height;
+                imageViewThumbnail.frame = CGRectMake((self.frame.size.width-image.size.width)/2, position.y, image.size.width, height);//do some fix
+            }
+        }
+        else
+        {
+            NSString *pic_url=[[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
+            if (!pic_url)
+            {
+                PendingImageQueue *q = [PendingImageQueue instance];
+                ImageRecorder *record=[[ImageRecorder alloc]initWithUrl:sts.thumbnail_pic_url index:indexPath Type:TwitterImage];
+                ImageDownloader *load = [[ImageDownloader alloc]initWithImageRecord:record delegate:_delegate];
+                [q.downloadQueue addOperation:load];
+                [q.pendingdownloadimages setObject:record forKey:record.url];
+                [record release];
+                [load release];
+            }
+        }
+    }
+    return height;
+}
+
+-(CGFloat)setupReTwitterHeader:(NSIndexPath*)indexPath :(Status *)sts :(NSInteger) tag :(CGPoint) position
+{
+    CGFloat height =15;
+	if(sts.retwitterText == nil || sts.retwitterText.length == 0)
+    {
+	    UIImageView *imageViewReTwitter = (UIImageView*)[self.contentView viewWithTag:tag];
+        if(imageViewReTwitter)
+        {
+		    imageViewReTwitter.hidden = YES;
+            imageViewReTwitter.frame = CGRectMake(0,0,0,0);
+        }
+        height = 0;
+    }
+    else
+    {
+        UIImageView *imageViewReTwitter = (UIImageView*)[self.contentView viewWithTag:tag];
+        
+        if(!imageViewReTwitter)
+        {
+            imageViewReTwitter = [[UIImageView alloc]init];
+            imageViewReTwitter.image = [UIImage imageNamed:@"timeline_rt_border_t.png"];
+            imageViewReTwitter.tag = tag;
+            [self.contentView addSubview:imageViewReTwitter];
+        }
+        imageViewReTwitter.frame = CGRectMake(position.x, position.y, 280, height);
+        imageViewReTwitter.hidden = NO;
+    }
+    
+    return height;
+}
+
+-(CGFloat)setupReTwitterImage:(NSIndexPath*)indexPath :(Status *)sts :(NSInteger) tag :(CGPoint) position
+{
+    CGFloat height =0;
+	if(sts.retwitterThumbnail_pic_url.length == 0)
+    {
+	    UIImageView *imageViewThumbnail = (UIImageView*)[self.contentView viewWithTag:tag];
+        if(imageViewThumbnail)
+        {
+		    imageViewThumbnail.hidden = YES;
+            imageViewThumbnail.frame = CGRectMake(0,0,0,0);
+        }
+    }
+    else
+    {
+        ImageRecorder *record = [[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.retwitterThumbnail_pic_url];
         if(record)
         {
             if (record.image)
@@ -145,12 +228,12 @@
         }
         else
         {
-            NSString *pic_url=[[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
+            NSString *pic_url=[[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.retwitterThumbnail_pic_url];
             if (!pic_url)
             {
                 PendingImageQueue *q = [PendingImageQueue instance];
-                ImageRecord *record=[[ImageRecord alloc]initWithName:sts.thumbnail_pic_url url:sts.thumbnail_pic_url index:indexPath];
-                ImageDownload *load = [[ImageDownload alloc]initWithImageRecord:record delegate:_delegate];
+                ImageRecorder *record=[[ImageRecorder alloc]initWithUrl:sts.retwitterThumbnail_pic_url index:indexPath Type:ReTwitterImage];
+                ImageDownloader *load = [[ImageDownloader alloc]initWithImageRecord:record delegate:_delegate];
                 [q.downloadQueue addOperation:load];
                 [q.pendingdownloadimages setObject:record forKey:record.url];
                 [record release];
@@ -158,38 +241,6 @@
             }
         }
     }
-    return height;
-}
-
--(CGFloat)setupReTwitterImage:(NSIndexPath*)indexPath :(Status *)sts :(NSInteger) tag :(CGPoint) position
-{
-    CGFloat height =15;
-	if(sts.retwitterText == nil || sts.retwitterText.length == 0)
-    {
-	    UIImageView *imageViewReTwitter = (UIImageView*)[self.contentView viewWithTag:tag];
-        if(imageViewReTwitter)
-        {
-		    imageViewReTwitter.hidden = YES;
-            imageViewReTwitter.frame = CGRectMake(0,0,0,0);
-            
-        }
-        height = 0;
-    }
-    else
-    {
-        UIImageView *imageViewReTwitter = (UIImageView*)[self.contentView viewWithTag:tag];
-        
-        if(!imageViewReTwitter)
-        {
-            imageViewReTwitter = [[UIImageView alloc]init];
-            imageViewReTwitter.image = [UIImage imageNamed:@"timeline_rt_border_t.png"];
-            imageViewReTwitter.tag = tag;
-            [self.contentView addSubview:imageViewReTwitter];
-        }
-        imageViewReTwitter.frame = CGRectMake(position.x, position.y, 280, height);
-        imageViewReTwitter.hidden = NO;
-    }
-    
     return height;
 }
 
@@ -230,7 +281,7 @@
 	return height;
 }
 
--(CGFloat)setupCellBackgroundImage:(CGFloat)lblContentHeight :(Status *)sts :(NSInteger) tag :(CGPoint) position
+-(CGFloat)setupCellBackgroundImage :(Status *)sts :(NSInteger) tag :(CGPoint) position
 {
 	UIImageView* centerimage = (UIImageView*)[self.contentView viewWithTag:tag];
     if(!centerimage)
@@ -242,19 +293,8 @@
         [self.contentView sendSubviewToBack:centerimage];
         [centerimage release];
     }
-    if(sts.thumbnail_pic_url.length!=0)
-    {
-        ImageRecord *record =[[PendingImageQueue instance].pendingdownloadimages objectForKey:sts.thumbnail_pic_url];
-        if(record)
-        {
-            if(record.image)
-            {
-                lblContentHeight = lblContentHeight;
-            }
-        }
-    }
-    centerimage.frame = CGRectMake(0, 0, 320, lblContentHeight + position.y);
-    return lblContentHeight;
+    centerimage.frame = CGRectMake(0, 0, 320,position.y);
+    return position.y;
 }
 
 -(CGFloat)setupCellFooterImage:(NSInteger) tag :(CGPoint) position
@@ -279,10 +319,11 @@
 
 - (void)dealloc
 {
-    [_userName release];
-    [_profile_image release];
-    [_ContentView release];
-    [_textContent release];
+    //[_userName release];
+    //[_profile_image release];
+    //[_ContentView release];
+    //[_textContent release];
     [super dealloc];
 }
+
 @end
